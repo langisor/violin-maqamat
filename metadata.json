@@ -1,0 +1,6 @@
+{
+  "name": "Violin Maqamat",
+  "description": "Microtonal Arabic violin fingerboard and maqamat learning lab with 24-EDO quarter-tones, 53-EDO commas, real-time audio synthesis, and modal analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
