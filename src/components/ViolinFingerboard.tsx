@@ -329,12 +329,12 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#050811] border border-cyan-950/70 rounded-3xl p-4 sm:p-6 shadow-[0_0_40px_rgba(6,182,212,0.14)] relative overflow-hidden backdrop-blur-xl">
+    <div className="w-full bg-panel-deep border border-cyan-950/70 rounded-3xl p-4 sm:p-6 shadow-[0_0_40px_var(--glow-cyan)] relative overflow-hidden backdrop-blur-xl">
       {/* Top Controls Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-xl font-bold tracking-wide text-white flex items-center gap-2">
+            <h2 className="text-xl font-bold tracking-wide text-ink-strong flex items-center gap-2">
               <span className="text-amber-400">Violin Fingerboard</span>
               <span className="text-xs font-serif text-amber-300 font-normal">لوحة أصابع الكمان</span>
             </h2>
@@ -344,7 +344,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
                 : (isStringsReversed ? 'Western (Reversed): E5-A4-D4-G3' : 'Western: G3-D4-A4-E5')}
             </span>
           </div>
-          <p className="text-xs text-stone-400 mt-0.5">
+          <p className="text-xs text-ink-muted mt-0.5">
             Tapered fretless ebony neck with authentic microtone guides and bowing dynamics.
           </p>
         </div>
@@ -361,7 +361,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
             }}
             className="px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase border border-cyan-600/50 bg-cyan-950/40 text-cyan-300 hover:bg-cyan-900/60 hover:border-cyan-400 transition-all shadow-[0_0_10px_rgba(6,182,212,0.15)] cursor-pointer active:scale-95"
           >
-            Naming: <span className="font-bold text-white">{namingMode === 'sharps' ? 'Sharps (#)' : namingMode === 'flats' ? 'Flats (♭)' : 'Arabic Names'}</span>
+            Naming: <span className="font-bold text-ink-strong">{namingMode === 'sharps' ? 'Sharps (#)' : namingMode === 'flats' ? 'Flats (♭)' : 'Arabic Names'}</span>
           </button>
 
           {/* Bow vs Pizzicato */}
@@ -384,7 +384,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
             className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all cursor-pointer active:scale-95 ${
               showQuarterTones
                 ? 'border-emerald-600/60 bg-emerald-950/40 text-emerald-300'
-                : 'border-stone-700 bg-stone-900 text-stone-400'
+                : 'border-line-strong bg-surface text-ink-muted'
             }`}
           >
             <span>{showQuarterTones ? 'Quarter-Tones: On 𝄳' : '12-TET Only'}</span>
@@ -397,7 +397,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
             className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all cursor-pointer active:scale-95 flex items-center gap-1.5 ${
               isStringsReversed
                 ? 'border-cyan-500/70 bg-cyan-950/70 text-cyan-200 shadow-[0_0_12px_rgba(6,182,212,0.3)]'
-                : 'border-stone-700 bg-stone-900 text-stone-300 hover:border-stone-600 hover:text-white'
+                : 'border-line-strong bg-surface text-ink hover:border-line-strong hover:text-ink-strong'
             }`}
             title="Reverse strings order (G3 D4 G4 D5 <-> D5 G4 D4 G3)"
           >
@@ -964,16 +964,16 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
       </div>
 
       {/* Helper instruction line (from image inspiration) */}
-      <div className="text-center text-xs text-stone-400 mt-2 mb-4 font-normal">
+      <div className="text-center text-xs text-ink-muted mt-2 mb-4 font-normal">
         Hold a note to sustain in bow mode, or tap to pluck in pizzicato mode. The small number is the semitone position above the open string.
       </div>
 
       {/* Bottom Bar: Position Selector & Note Display Filter */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-stone-800/80">
+      <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-line/80">
         <div className="flex flex-wrap items-center gap-3">
           {/* 1. Position Buttons (1-4) */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5">
-            <span className="text-xs text-stone-400 font-medium whitespace-nowrap">Position:</span>
+            <span className="text-xs text-ink-muted font-medium whitespace-nowrap">Position:</span>
             {[
               { id: '1st', label: '1st' },
               { id: '2nd', label: '2nd' },
@@ -987,8 +987,8 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
                 onClick={() => setHandPosition(tab.id as HandPosition)}
                 className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
                   handPosition === tab.id
-                    ? 'bg-blue-600 text-white font-bold shadow-[0_0_12px_rgba(37,99,235,0.6)] ring-1 ring-blue-400'
-                    : 'bg-stone-900 border border-stone-800 text-stone-400 hover:text-stone-200 hover:bg-stone-800'
+                    ? 'bg-blue-600 text-on-solid font-bold shadow-[0_0_12px_rgba(37,99,235,0.6)] ring-1 ring-blue-400'
+                    : 'bg-surface border border-line text-ink-muted hover:text-ink-strong hover:bg-raised'
                 }`}
               >
                 {tab.label}
@@ -996,7 +996,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
             ))}
           </div>
 
-          <div className="h-5 w-px bg-stone-800 hidden sm:block" />
+          <div className="h-5 w-px bg-raised hidden sm:block" />
 
           {/* 2. Note Display Filter: All (0-12) vs Maqam Scale Only */}
           <div className="flex items-center gap-1.5">
@@ -1005,8 +1005,8 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
               onClick={() => setScaleFilter('all-notes')}
               className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
                 scaleFilter === 'all-notes'
-                  ? 'bg-stone-200 text-stone-950 font-bold shadow-[0_0_10px_rgba(255,255,255,0.3)] ring-1 ring-white'
-                  : 'bg-stone-900 border border-stone-800 text-stone-400 hover:text-stone-200 hover:bg-stone-800'
+                  ? 'bg-raised text-on-accent font-bold shadow-[0_0_10px_rgba(255,255,255,0.3)] ring-1 ring-white'
+                  : 'bg-surface border border-line text-ink-muted hover:text-ink-strong hover:bg-raised'
               }`}
             >
               All (0-12)
@@ -1016,8 +1016,8 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
               onClick={() => setScaleFilter('maqam-only')}
               className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
                 scaleFilter === 'maqam-only'
-                  ? 'bg-emerald-600 text-white font-bold shadow-[0_0_12px_rgba(16,185,129,0.5)] border border-emerald-400/80 ring-1 ring-emerald-300'
-                  : 'bg-stone-900 border border-stone-800 text-stone-400 hover:text-stone-200 hover:bg-stone-800'
+                  ? 'bg-emerald-600 text-on-solid font-bold shadow-[0_0_12px_rgba(16,185,129,0.5)] border border-emerald-400/80 ring-1 ring-emerald-300'
+                  : 'bg-surface border border-line text-ink-muted hover:text-ink-strong hover:bg-raised'
               }`}
             >
               Maqam Scale Only
@@ -1027,27 +1027,27 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
 
         {/* Legend */}
         <div className="flex items-center gap-3 text-xs">
-          <div className="flex items-center gap-1.5 text-stone-300">
+          <div className="flex items-center gap-1.5 text-ink">
             <span className="w-3 h-3 rounded-full bg-amber-500 border border-amber-300 shadow-[0_0_8px_rgba(245,158,11,0.6)]" />
             <span>Tonic (Qarar)</span>
           </div>
-          <div className="flex items-center gap-1.5 text-stone-300">
+          <div className="flex items-center gap-1.5 text-ink">
             <span className="w-3 h-3 rounded-full bg-cyan-500 border border-cyan-300" />
             <span>Dominant (Ghammaz)</span>
           </div>
-          <div className="flex items-center gap-1.5 text-stone-300">
+          <div className="flex items-center gap-1.5 text-ink">
             <span className="w-3 h-3 rounded-full bg-emerald-600 border border-emerald-400" />
             <span>Maqam Degree</span>
           </div>
           <div className="flex items-center gap-1.5 text-amber-400">
-            <span className="w-3 h-3 rounded-full bg-stone-900 border border-amber-500" />
+            <span className="w-3 h-3 rounded-full bg-surface border border-amber-500" />
             <span>𝄳 Half-Flat</span>
           </div>
         </div>
       </div>
 
       {/* Tune Open Strings Bar (direct inspiration from image) */}
-      <div className="mt-4 pt-3 border-t border-stone-800/80">
+      <div className="mt-4 pt-3 border-t border-line/80">
         <div className="text-xs text-emerald-400 font-semibold mb-2">
           Tune open strings (دوزان الأوتار المطلقة)
         </div>
@@ -1063,13 +1063,13 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
                 className={`flex items-center justify-between px-4 py-2.5 rounded-xl border transition-all cursor-pointer active:scale-95 ${
                   isPlayingThisString
                     ? 'border-amber-400 bg-amber-950/60 text-amber-200 shadow-[0_0_15px_rgba(245,158,11,0.4)]'
-                    : 'border-blue-900/60 bg-blue-950/30 text-stone-300 hover:border-blue-500/80 hover:bg-blue-900/40'
+                    : 'border-blue-900/60 bg-blue-950/30 text-ink hover:border-blue-500/80 hover:bg-blue-900/40'
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-mono text-cyan-400 font-bold">{str.name}</span>
-                  <span className="text-sm font-bold text-white">{str.letter}</span>
-                  <span className="text-xs font-mono text-stone-400">{str.openNote}</span>
+                  <span className="text-sm font-bold text-ink-strong">{str.letter}</span>
+                  <span className="text-xs font-mono text-ink-muted">{str.openNote}</span>
                 </div>
                 <span className="text-xs font-serif text-amber-300/90">{str.arabic}</span>
               </button>
@@ -1079,7 +1079,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
       </div>
 
       {/* Live Inspector Status Bar */}
-      <div className="mt-4 pt-3 border-t border-stone-800/80 flex flex-wrap items-center justify-between text-xs text-stone-400 gap-2">
+      <div className="mt-4 pt-3 border-t border-line/80 flex flex-wrap items-center justify-between text-xs text-ink-muted gap-2">
         <div>
           {activePlayingNote ? (
             <div className="flex items-center gap-2 bg-amber-950/40 border border-amber-800/60 px-3 py-1 rounded-full text-amber-300 animate-pulse">
@@ -1091,12 +1091,12 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
             </div>
           ) : hoveredNote ? (
             <div className="flex items-center gap-2">
-              <span className="text-stone-300 font-medium">Hovered Pitch:</span>
+              <span className="text-ink font-medium">Hovered Pitch:</span>
               <span className="text-amber-400 font-bold text-sm">{hoveredNote.noteKey}</span>
               <span className="text-emerald-400 font-serif">
                 {hoveredNote.arabicName || ''}
               </span>
-              <span className="text-stone-500 font-mono">
+              <span className="text-ink-faint font-mono">
                 ({audioEngine.calculateFrequency(hoveredNote.baseMidi, hoveredNote.quarterOffset, tuningSystem, hoveredNote.commaOffset).toFixed(1)} Hz)
               </span>
             </div>
@@ -1105,7 +1105,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
           )}
         </div>
 
-        <div className="flex items-center gap-2 text-stone-500 font-mono text-[11px]">
+        <div className="flex items-center gap-2 text-ink-faint font-mono text-[11px]">
           <span>Mode: {playMode.toUpperCase()}</span>
           <span>•</span>
           <span>Tuning: {tuningSystem}</span>

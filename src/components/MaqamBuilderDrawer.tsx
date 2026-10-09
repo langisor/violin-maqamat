@@ -296,28 +296,28 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-sm transition-opacity">
+    <div className="fixed inset-0 z-50 flex justify-end bg-scrim backdrop-blur-sm transition-opacity">
       {/* Drawer Panel */}
-      <div className="w-full max-w-2xl bg-[#090d16] border-l border-amber-900/40 text-stone-100 h-full flex flex-col shadow-2xl overflow-hidden animate-in slide-in-from-right duration-300">
+      <div className="w-full max-w-2xl bg-panel-pop border-l border-amber-900/40 text-ink h-full flex flex-col shadow-2xl overflow-hidden anim-slide-in">
         {/* Drawer Header */}
-        <div className="p-5 sm:p-6 border-b border-stone-800 flex items-center justify-between bg-stone-950/70">
+        <div className="p-5 sm:p-6 border-b border-line flex items-center justify-between bg-canvas/70">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-stone-950 font-bold shadow-lg shadow-amber-500/20">
-              <Layers className="w-5 h-5 text-stone-950" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-on-accent font-bold shadow-lg shadow-amber-500/20">
+              <Layers className="w-5 h-5 text-on-accent" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+              <h2 className="text-lg font-bold text-ink-strong flex items-center gap-2">
                 <span>Maqam Builder</span>
                 <span className="text-xs font-serif text-amber-300 font-normal">بناء وتركيب المقامات</span>
               </h2>
-              <p className="text-xs text-stone-400">Assemble Root &amp; Secondary Ajnas to analyze or discover matching Maqamat.</p>
+              <p className="text-xs text-ink-muted">Assemble Root &amp; Secondary Ajnas to analyze or discover matching Maqamat.</p>
             </div>
           </div>
 
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-xl text-stone-400 hover:text-white hover:bg-stone-800/80 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-ink-muted hover:text-ink-strong hover:bg-raised/80 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -336,14 +336,14 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                 <Sparkles className="w-3.5 h-3.5" />
                 {builtScaleResult.matchedMaqam ? 'Standard Maqam Detected' : 'Custom Hybrid Maqam'}
               </span>
-              <span className="text-xs text-stone-400 font-mono">
+              <span className="text-xs text-ink-muted font-mono">
                 {builtScaleResult.builtMaqam.family} Family
               </span>
             </div>
 
             <div className="mt-2 flex items-baseline justify-between">
               <div>
-                <h3 className="text-2xl font-bold text-white">
+                <h3 className="text-2xl font-bold text-ink-strong">
                   {builtScaleResult.builtMaqam.name}
                 </h3>
                 <span className="text-lg font-serif text-amber-300">
@@ -352,14 +352,14 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
               </div>
 
               <div className="text-right">
-                <div className="text-xs text-stone-400">Tonic Qarar</div>
+                <div className="text-xs text-ink-muted">Tonic Qarar</div>
                 <div className="text-sm font-bold text-amber-400">
                   {builtScaleResult.builtMaqam.tonicArabicName}
                 </div>
               </div>
             </div>
 
-            <p className="text-xs text-stone-300 mt-2 leading-relaxed">
+            <p className="text-xs text-ink mt-2 leading-relaxed">
               {builtScaleResult.builtMaqam.sayrNotes}
             </p>
           </div>
@@ -371,24 +371,24 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
             </h4>
 
             {/* Slot 1: Jins Asl (Root) */}
-            <div className="bg-stone-900/80 border border-stone-800 rounded-2xl p-4 space-y-3">
+            <div className="bg-surface/80 border border-line rounded-2xl p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-emerald-500 text-stone-950 text-xs font-bold flex items-center justify-center">1</span>
+                  <span className="w-5 h-5 rounded-full bg-emerald-500 text-on-accent text-xs font-bold flex items-center justify-center">1</span>
                   <span className="text-sm font-bold text-emerald-400">Jins Asl (Root Jins / جنس الأصل)</span>
                 </div>
-                <span className="text-xs font-serif text-stone-400">
+                <span className="text-xs font-serif text-ink-muted">
                   {builtScaleResult.jins1.arabicName}
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] text-stone-400 block mb-1">Select Jins</label>
+                  <label className="text-[11px] text-ink-muted block mb-1">Select Jins</label>
                   <select
                     value={slot1.jinsId}
                     onChange={(e) => setSlot1(prev => ({ ...prev, jinsId: e.target.value }))}
-                    className="w-full bg-stone-950 border border-stone-700 rounded-xl px-3 py-2 text-xs text-stone-200 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
+                    className="w-full bg-canvas border border-line-strong rounded-xl px-3 py-2 text-xs text-ink focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
                   >
                     {AJNAS_DATASET.map(j => (
                       <option key={j.id} value={j.id}>
@@ -399,11 +399,11 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                 </div>
 
                 <div>
-                  <label className="text-[11px] text-stone-400 block mb-1">Root Tonic Degree</label>
+                  <label className="text-[11px] text-ink-muted block mb-1">Root Tonic Degree</label>
                   <select
                     value={slot1.tonicNote}
                     onChange={(e) => setSlot1(prev => ({ ...prev, tonicNote: e.target.value }))}
-                    className="w-full bg-stone-950 border border-stone-700 rounded-xl px-3 py-2 text-xs text-stone-200 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
+                    className="w-full bg-canvas border border-line-strong rounded-xl px-3 py-2 text-xs text-ink focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
                   >
                     {AVAILABLE_TONIC_NOTES.map(note => (
                       <option key={note} value={note}>
@@ -414,30 +414,30 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                 </div>
               </div>
 
-              <p className="text-[11px] text-stone-400 italic">
+              <p className="text-[11px] text-ink-muted italic">
                 {builtScaleResult.jins1.description}
               </p>
             </div>
 
             {/* Slot 2: Jins Far' (Secondary) */}
-            <div className="bg-stone-900/80 border border-stone-800 rounded-2xl p-4 space-y-3">
+            <div className="bg-surface/80 border border-line rounded-2xl p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-cyan-500 text-stone-950 text-xs font-bold flex items-center justify-center">2</span>
+                  <span className="w-5 h-5 rounded-full bg-cyan-500 text-on-accent text-xs font-bold flex items-center justify-center">2</span>
                   <span className="text-sm font-bold text-cyan-400">Jins Far&apos; (Secondary Jins / جنس الفرع)</span>
                 </div>
-                <span className="text-xs font-serif text-stone-400">
+                <span className="text-xs font-serif text-ink-muted">
                   {builtScaleResult.jins2.arabicName}
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] text-stone-400 block mb-1">Select Jins</label>
+                  <label className="text-[11px] text-ink-muted block mb-1">Select Jins</label>
                   <select
                     value={slot2.jinsId}
                     onChange={(e) => setSlot2(prev => ({ ...prev, jinsId: e.target.value }))}
-                    className="w-full bg-stone-950 border border-stone-700 rounded-xl px-3 py-2 text-xs text-stone-200 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
+                    className="w-full bg-canvas border border-line-strong rounded-xl px-3 py-2 text-xs text-ink focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
                   >
                     {AJNAS_DATASET.map(j => (
                       <option key={j.id} value={j.id}>
@@ -448,11 +448,11 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                 </div>
 
                 <div>
-                  <label className="text-[11px] text-stone-400 block mb-1">Modulation / Ghammaz Degree</label>
+                  <label className="text-[11px] text-ink-muted block mb-1">Modulation / Ghammaz Degree</label>
                   <select
                     value={slot2.tonicNote}
                     onChange={(e) => setSlot2(prev => ({ ...prev, tonicNote: e.target.value }))}
-                    className="w-full bg-stone-950 border border-stone-700 rounded-xl px-3 py-2 text-xs text-stone-200 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
+                    className="w-full bg-canvas border border-line-strong rounded-xl px-3 py-2 text-xs text-ink focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
                   >
                     {AVAILABLE_TONIC_NOTES.map(note => (
                       <option key={note} value={note}>
@@ -463,7 +463,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                 </div>
               </div>
 
-              <p className="text-[11px] text-stone-400 italic">
+              <p className="text-[11px] text-ink-muted italic">
                 {builtScaleResult.jins2.description}
               </p>
             </div>
@@ -480,11 +480,11 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                 return (
                   <div
                     key={idx}
-                    className="flex flex-col items-center justify-center bg-stone-950/80 border border-stone-800 rounded-xl p-2 text-center"
+                    className="flex flex-col items-center justify-center bg-canvas/80 border border-line rounded-xl p-2 text-center"
                   >
-                    <span className="text-[10px] text-stone-500 font-mono">Deg {idx + 1}</span>
+                    <span className="text-[10px] text-ink-faint font-mono">Deg {idx + 1}</span>
                     <span className="text-sm font-bold text-amber-300">{note}</span>
-                    <span className="text-[10px] text-stone-400 font-serif leading-tight">
+                    <span className="text-[10px] text-ink-muted font-serif leading-tight">
                       {arabicData?.arabic ? arabicData.arabic.split(' ')[0] : '—'}
                     </span>
                   </div>
@@ -494,20 +494,20 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
           </div>
 
           {/* 24-EDO Quarter-Intervals (أبعاد أرباع التون) */}
-          <div className="bg-stone-950/80 border border-amber-900/50 rounded-2xl p-4 sm:p-5 space-y-4 shadow-[0_0_25px_rgba(245,158,11,0.08)]">
+          <div className="bg-canvas/80 border border-amber-900/50 rounded-2xl p-4 sm:p-5 space-y-4 shadow-[0_0_25px_rgba(245,158,11,0.08)]">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2.5">
                 <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center font-bold text-xs">
                   𝄳
                 </div>
                 <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide flex items-center gap-2">
+                  <h4 className="text-xs sm:text-sm font-bold text-ink-strong tracking-wide flex items-center gap-2">
                     <span>Quarter-Intervals (أبعاد أرباع التون)</span>
                     <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 px-1.5 py-0.5 rounded">
                       24-EDO
                     </span>
                   </h4>
-                  <p className="text-[11px] text-stone-400">
+                  <p className="text-[11px] text-ink-muted">
                     Standard Arabic scale intervals (4 = whole tone, 3 = 3/4 neutral tone / half-flat)
                   </p>
                 </div>
@@ -520,29 +520,29 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                 <button
                   type="button"
                   onClick={handleCopyFormula}
-                  className="px-3 py-1 rounded-xl bg-stone-900 hover:bg-stone-850 border border-stone-700 text-stone-300 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
+                  className="px-3 py-1 rounded-xl bg-surface hover:bg-raised border border-line-strong text-ink hover:text-ink-strong text-xs font-mono flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
                   title="Copy scale formula to clipboard"
                 >
-                  {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-stone-400" />}
+                  {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-ink-muted" />}
                   <span>{isCopied ? 'Copied!' : 'Copy'}</span>
                 </button>
               </div>
             </div>
 
             {/* Prominent Formula Bar as requested: e.g. R(C3) - 4 - 3(half-flat) - 4 - .... */}
-            <div className="p-3.5 bg-gradient-to-r from-amber-950/40 via-stone-900/90 to-amber-950/30 border border-amber-500/50 rounded-xl flex items-center justify-between gap-3 overflow-x-auto scrollbar-thin shadow-inner">
+            <div className="p-3.5 bg-gradient-to-r from-amber-950/40 via-surface/90 to-amber-950/30 border border-amber-500/50 rounded-xl flex items-center justify-between gap-3 overflow-x-auto scrollbar-thin shadow-inner">
               <div className="font-mono text-sm sm:text-base font-bold text-amber-300 tracking-wider select-all whitespace-nowrap flex items-center gap-1.5">
                 <span className="text-amber-400 font-extrabold bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30">
                   R({builtScaleResult.builtMaqam.tonicNote})
                 </span>
-                <span className="text-stone-500">-</span>
+                <span className="text-ink-faint">-</span>
                 {builtScaleResult.quarterSteps.map((step, idx) => (
                   <React.Fragment key={idx}>
-                    <span className={step.label.includes('half-flat') ? 'text-amber-300 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/30' : 'text-stone-200'}>
+                    <span className={step.label.includes('half-flat') ? 'text-amber-300 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/30' : 'text-ink'}>
                       {step.label}
                     </span>
                     {idx < builtScaleResult.quarterSteps.length - 1 && (
-                      <span className="text-stone-500">-</span>
+                      <span className="text-ink-faint">-</span>
                     )}
                   </React.Fragment>
                 ))}
@@ -551,7 +551,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
 
             {/* Interactive Step-by-Step Chain Breakdown */}
             <div className="space-y-2 pt-1">
-              <div className="text-[11px] font-semibold text-stone-300">
+              <div className="text-[11px] font-semibold text-ink">
                 Detailed Interval Steps (تفصيل الأبعاد بين درجات السلم):
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -561,16 +561,16 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                     className={`flex items-center justify-between p-2.5 rounded-xl border transition-all ${
                       step.isHalfFlat
                         ? 'bg-amber-950/20 border-amber-500/40 text-amber-200'
-                        : 'bg-stone-900/60 border-stone-800 text-stone-300'
+                        : 'bg-surface/60 border-line text-ink'
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-stone-950 text-stone-400 border border-stone-700 text-[10px] font-mono flex items-center justify-center font-bold">
+                      <span className="w-5 h-5 rounded-full bg-canvas text-ink-muted border border-line-strong text-[10px] font-mono flex items-center justify-center font-bold">
                         {step.stepIndex}
                       </span>
-                      <div className="font-semibold text-white">
+                      <div className="font-semibold text-ink-strong">
                         <span>{step.fromNote}</span>
-                        <span className="text-stone-500 mx-1.5">➔</span>
+                        <span className="text-ink-faint mx-1.5">➔</span>
                         <span>{step.toNote}</span>
                       </div>
                     </div>
@@ -581,11 +581,11 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                           ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
                           : step.quarters === 4
                           ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                          : 'bg-stone-800 text-stone-300'
+                          : 'bg-raised text-ink'
                       }`}>
                         {step.label}
                       </span>
-                      <span className="text-[10px] text-stone-400 font-mono">
+                      <span className="text-[10px] text-ink-muted font-mono">
                         ({step.cents}¢)
                       </span>
                     </div>
@@ -595,7 +595,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
             </div>
 
             {/* Reference info for classical 53-EDO Commas */}
-            <div className="pt-2 border-t border-stone-800/80 flex items-center justify-between text-[11px] text-stone-500">
+            <div className="pt-2 border-t border-line/80 flex items-center justify-between text-[11px] text-ink-faint">
               <span>Classical 53-EDO Commas: {builtScaleResult.combinedCommas.join(' - ')}k</span>
               <span className="font-mono">Total = {builtScaleResult.combinedCommas.reduce((a, b) => a + b, 0)} Commas</span>
             </div>
@@ -603,7 +603,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
         </div>
 
         {/* Drawer Footer Actions */}
-        <div className="p-4 sm:p-5 border-t border-stone-800 bg-stone-950/80 flex flex-wrap items-center justify-between gap-3">
+        <div className="p-4 sm:p-5 border-t border-line bg-canvas/80 flex flex-wrap items-center justify-between gap-3">
           <button
             type="button"
             onClick={handlePlayBuiltScale}
@@ -611,7 +611,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
               isPlayingScale
                 ? 'bg-amber-600/40 border-amber-500 text-amber-300 animate-pulse'
-                : 'bg-stone-900 border-stone-700 text-stone-200 hover:bg-stone-800 hover:border-stone-600'
+                : 'bg-surface border-line-strong text-ink hover:bg-raised hover:border-line-strong'
             }`}
           >
             <Play className="w-3.5 h-3.5 fill-current" />
@@ -621,7 +621,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
           <button
             type="button"
             onClick={handleApplyToApp}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 shadow-lg shadow-amber-500/20 transition-all cursor-pointer active:scale-95"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-on-accent shadow-lg shadow-amber-500/20 transition-all cursor-pointer active:scale-95"
           >
             <Check className="w-4 h-4" />
             <span>Apply to Violin (تطبيق على الكمان)</span>

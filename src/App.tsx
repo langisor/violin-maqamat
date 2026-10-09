@@ -4,7 +4,7 @@ import { MaqamScale, TuningSystem, ViolinTuningPreset } from "./types/maqam";
 import { audioEngine } from "./services/audioEngine";
 import { ViolinFingerboard } from "./components/ViolinFingerboard";
 import { MaqamSelector } from "./components/MaqamSelector";
-import { Maqam53EdoChart } from "./components/Maqam53EdoChart";
+import { EdoChartSection } from "./components/EdoChartSection";
 import { MaqamInfoCard } from "./components/MaqamInfoCard";
 import { MainMenu } from "./components/MainMenu";
 import { MaqamBuilderDrawer } from "./components/MaqamBuilderDrawer";
@@ -17,6 +17,7 @@ import { AboutModal } from "./components/AboutModal";
 import { ExitModal } from "./components/ExitModal";
 import { RotateCcw, PowerOff, Sun, Moon } from "lucide-react";
 import { useTheme } from "./context/ThemeContext";
+import { getFrequencyForNoteName } from "./utils/pitch";
 
 export const App: React.FC = () => {
   const { theme, setTheme, toggleTheme } = useTheme();
@@ -62,49 +63,6 @@ export const App: React.FC = () => {
       audioEngine.stopDrone();
     };
   }, []);
-
-  // Convert note string like "C4", "Ed4", "F#4", "Bb3" into exact Hz
-  const getFrequencyForNoteName = (
-    noteName: string,
-    system: TuningSystem,
-  ): number => {
-    const isQuarter = noteName.includes("d");
-    const cleanName = noteName.replace("d", "");
-    const noteMap: Record<string, number> = {
-      C: 0,
-      "C#": 1,
-      Db: 1,
-      D: 2,
-      "D#": 3,
-      Eb: 3,
-      E: 4,
-      F: 5,
-      "F#": 6,
-      Gb: 6,
-      G: 7,
-      "G#": 8,
-      Ab: 8,
-      A: 9,
-      "A#": 10,
-      Bb: 10,
-      B: 11,
-    };
-
-    const match = cleanName.match(/^([A-G][#b]?)([0-9])$/);
-    if (!match) return 440;
-
-    const basePitch = match[1];
-    const oct = parseInt(match[2], 10);
-    const midi = (oct + 1) * 12 + (noteMap[basePitch] || 0);
-    const commaOffset = isQuarter ? -2 : 0;
-
-    return audioEngine.calculateFrequency(
-      midi,
-      isQuarter ? -1 : 0,
-      system,
-      commaOffset,
-    );
-  };
 
   // Update drone frequency when switching Maqamat if drone is active
   useEffect(() => {
@@ -255,20 +213,20 @@ export const App: React.FC = () => {
   // If application has been terminated
   if (isTerminated) {
     return (
-      <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col items-center justify-center p-6 text-center">
-        <div className="max-w-md w-full bg-[#0c0d14] border border-stone-800 rounded-3xl p-8 shadow-2xl space-y-6">
+      <div className="min-h-screen bg-canvas text-ink flex flex-col items-center justify-center p-6 text-center">
+        <div className="max-w-md w-full bg-panel-pop border border-line rounded-3xl p-8 shadow-2xl space-y-6">
           <div className="w-16 h-16 rounded-2xl bg-red-950/40 border border-red-800/60 text-red-400 mx-auto flex items-center justify-center">
             <PowerOff className="w-8 h-8" />
           </div>
 
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-white flex items-center justify-center gap-2">
+            <h1 className="text-2xl font-bold text-ink-strong flex items-center justify-center gap-2">
               <span>Workstation Terminated</span>
               <span className="text-sm font-serif text-amber-300 font-normal">
                 تم إنهاء الجلسة
               </span>
             </h1>
-            <p className="text-xs sm:text-sm text-stone-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
               All microtonal sound oscillators and audition timers have been
               safely discharged. Thank you for using the Arabic Violin Maqam
               Lab.
@@ -279,7 +237,7 @@ export const App: React.FC = () => {
             <button
               type="button"
               onClick={handleRestartApp}
-              className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-stone-950 font-bold text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-on-accent font-bold text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
             >
               <RotateCcw className="w-4 h-4" />
               <span>Relaunch Workstation (إعادة التشغيل)</span>
@@ -291,40 +249,22 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div
-      className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
-        isLight
-          ? "bg-slate-50 text-slate-900 selection:bg-amber-400 selection:text-slate-950"
-          : "bg-stone-950 text-stone-100 selection:bg-amber-500 selection:text-stone-950"
-      }`}
-    >
+    <div className="min-h-screen flex flex-col font-sans bg-canvas text-ink transition-colors duration-200 selection:bg-amber-500 selection:text-stone-950">
       {/* Top Navigation Bar */}
-      <header
-        className={`border-b sticky top-0 z-40 px-4 sm:px-6 py-3.5 backdrop-blur-md transition-colors duration-200 ${
-          isLight
-            ? "border-slate-200 bg-white/90 text-slate-900 shadow-sm"
-            : "border-stone-800/80 bg-stone-950/85 text-white"
-        }`}
-      >
+      <header className="border-b border-line bg-canvas/85 sticky top-0 z-40 px-4 sm:px-6 py-3.5 backdrop-blur-md transition-colors duration-200">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20 text-stone-950 font-bold text-xl select-none">
               🎻
             </div>
             <div>
-              <h1
-                className={`text-lg font-bold tracking-tight flex items-center gap-2 ${isLight ? "text-slate-900" : "text-white"}`}
-              >
+              <h1 className="text-lg font-bold tracking-tight flex items-center gap-2 text-ink-strong">
                 <span>Arabic Violin Maqam Lab</span>
-                <span
-                  className={`text-xs font-serif font-normal ${isLight ? "text-amber-700" : "text-amber-400"}`}
-                >
+                <span className="text-xs font-serif font-normal text-amber-400">
                   مختبر مقامات الكمان العربي
                 </span>
               </h1>
-              <p
-                className={`text-xs ${isLight ? "text-slate-500" : "text-stone-400"}`}
-              >
+              <p className="text-xs text-ink-muted">
                 Microtonal Fretless Violin &amp; Maqamat Explorer (24-EDO &amp;
                 53-EDO)
               </p>
@@ -334,9 +274,7 @@ export const App: React.FC = () => {
           {/* Volume, Status Indicators, Theme Toggle, and Main Menu */}
           <div className="flex items-center gap-2.5 sm:gap-4">
             <div className="flex items-center gap-2">
-              <span
-                className={`text-xs ${isLight ? "text-slate-500" : "text-stone-400"}`}
-              >
+              <span className="text-xs text-ink-muted">
                 Volume
               </span>
               <input
@@ -353,16 +291,11 @@ export const App: React.FC = () => {
 
             {lastFrequency && (
               <div
-                className={`hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono ${
-                  isLight
-                    ? "bg-slate-100 border border-slate-200 text-amber-700 font-bold"
-                    : "bg-stone-900 border border-stone-800 text-amber-400"
-                }`}
+                className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-surface border border-line text-amber-400"
+                aria-live="polite"
               >
-                <span className={isLight ? "text-slate-400" : "text-stone-500"}>
-                  Freq:
-                </span>
-                <span className="font-bold">{lastFrequency.toFixed(1)} Hz</span>
+                <span className="text-ink-faint">Freq:</span>
+                <span className="font-bold tabular-nums">{lastFrequency.toFixed(1)} Hz</span>
               </div>
             )}
 
@@ -370,23 +303,16 @@ export const App: React.FC = () => {
             <button
               type="button"
               onClick={toggleTheme}
-              className={`p-2 rounded-xl border text-xs font-medium transition-all shadow-sm cursor-pointer active:scale-95 flex items-center justify-center ${
-                isLight
-                  ? "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 hover:border-amber-500"
-                  : "border-stone-800 bg-stone-900 text-amber-400 hover:bg-stone-850 hover:border-amber-500/50"
-              }`}
+              className="p-2 rounded-xl border border-line bg-surface text-amber-400 hover:bg-raised hover:border-amber-500/60 text-xs font-medium transition-all shadow-sm cursor-pointer active:scale-95 flex items-center justify-center"
               title={
                 isLight
                   ? "Switch to Dark Mode (الوضع الليلي)"
                   : "Switch to Light Mode (الوضع النهاري)"
               }
-              aria-label="Toggle Light/Dark Theme"
+              aria-label={isLight ? "Switch to dark theme" : "Switch to light theme"}
+              aria-pressed={isLight}
             >
-              {isLight ? (
-                <Moon className="w-4 h-4 text-slate-700" />
-              ) : (
-                <Sun className="w-4 h-4 text-amber-400" />
-              )}
+              {isLight ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
 
             {/* Responsive Main Menu with Submenu Buttons */}
@@ -425,8 +351,8 @@ export const App: React.FC = () => {
           onNoteTrigger={handleNoteTrigger}
         />
 
-        {/* D3.js 53-EDO Microtonal Comma Interval & Tonic Relationship Chart */}
-        <Maqam53EdoChart
+        {/* D3.js 24-EDO / 53-EDO Microtonal Interval & Tonic Relationship Charts */}
+        <EdoChartSection
           currentMaqam={currentMaqam}
           tuningSystem={tuningSystem}
           activePlayingNote={activePlayingNote}
@@ -464,18 +390,12 @@ export const App: React.FC = () => {
       />
 
       {/* Footer */}
-      <footer
-        className={`border-t py-6 text-center text-xs px-4 transition-colors ${
-          isLight
-            ? "border-slate-200 text-slate-500"
-            : "border-stone-800/80 text-stone-500"
-        }`}
-      >
+      <footer className="border-t border-line py-6 text-center text-xs px-4 text-ink-muted transition-colors">
         <p>
           Derived from the theoretical treatises of the 1932 Cairo Congress of
           Arab Music, Offtonic Comma Theory, and MaqamWorld.
         </p>
-        <p className={`mt-1 ${isLight ? "text-slate-400" : "text-stone-600"}`}>
+        <p className="mt-1 text-ink-faint">
           Features authentic 24-EDO Quarter-Tones, 53-EDO Ottoman Commas, and
           G3-D4-G4-D5 Arabic Violin scordatura.
         </p>

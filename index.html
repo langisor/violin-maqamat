@@ -3,6 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0a09" />
+    <script>
+      /* Set theme class before first paint to avoid a flash */
+      try {
+        var t = localStorage.getItem("arabic_violin_theme_v1");
+        if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.classList.add(t);
+      } catch (e) { document.documentElement.classList.add("dark"); }
+    </script>
     <title>Virtual Arabic Violin & Maqamat Explorer</title>
     <meta name="description" content="Microtonal Arabic violin fingerboard and maqamat learning lab with 24-EDO quarter-tones, 53-EDO commas, real-time audio synthesis, and modal analysis." />
     <meta property="og:title" content="Virtual Arabic Violin & Maqamat Explorer" />

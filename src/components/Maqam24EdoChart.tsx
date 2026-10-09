@@ -5,40 +5,40 @@ import { audioEngine } from '../services/audioEngine';
 import { areNotesEquivalent } from './ViolinFingerboard';
 import { useTheme } from '../context/ThemeContext';
 import { CHART_PALETTES } from '../theme/chartPalette';
-import { getFrequencyForNoteName } from '../utils/pitch';
+import { getFrequencyForNoteName, noteToQuarterTones } from '../utils/pitch';
 import { EdoChartConfig, EdoDegree, prepareSvg, renderLinearChart, renderRadialChart } from '../utils/edoChartRenderers';
 import { EdoStatCard, EdoViewMode, EdoViewSwitcher } from './EdoChartFrame';
 
-interface Maqam53EdoChartProps {
+interface Maqam24EdoChartProps {
   currentMaqam: MaqamScale;
   tuningSystem: TuningSystem;
   activePlayingNote: string | null;
   onNoteTrigger: (noteKey: string, freq: number) => void;
 }
 
-const COMMA_CENTS = 1200 / 53;
+const QUARTER_CENTS = 50;
 const CONFIG: EdoChartConfig = {
-  divisions: 53,
-  unit: 'k',
-  majorEvery: 9,
-  labelEvery: 9,
-  hubTitle: '53-EDO COMMAS',
-  idPrefix: 'edo53',
+  divisions: 24,
+  unit: 'q',
+  majorEvery: 2, // every semitone is emphasised
+  labelEvery: 4, // numeric label every whole tone
+  hubTitle: '24-EDO QUARTER-TONES',
+  idPrefix: 'edo24',
 };
 
-// Interval naming helper in 53-EDO Ottoman/Arab theory
-const getIntervalArabicName = (commas: number): string => {
-  if (commas >= 11) return "Bu'd Fatish / بُعْد فَاتِش (Augmented 2nd)";
-  if (commas === 9) return 'Tanini / طَنِيني (Major 2nd ~204¢)';
-  if (commas === 8) return 'Mujannab Kabir / مُجَنَّب كبير (Minor 2nd ~181¢)';
-  if (commas === 7) return 'Mujannab Mutawassit / مُجَنَّب متوسط (Sikah ~158¢)';
-  if (commas === 6) return 'Mujannab Saghir / مُجَنَّب صغير (Neutral 2nd ~136¢)';
-  if (commas === 5) return 'Baqiyyah / بَقِيَّة (Diatonic Semitone ~113¢)';
-  if (commas === 4) return 'Limma / فَضْلَة (Minor Semitone ~91¢)';
-  return `${commas} Commas`;
+// Interval naming in the 24-EDO (Cairo 1932) quarter-tone system
+const getIntervalName = (quarters: number): string => {
+  switch (quarters) {
+    case 1: return "Rub' Tone / ربع تون (Quarter-tone 50¢)";
+    case 2: return 'Nisf Tone / نصف تون (Semitone 100¢)';
+    case 3: return 'Thalathat Arba\' / ثلاثة أرباع (Neutral 2nd 150¢)';
+    case 4: return 'Tone / تون (Whole tone 200¢)';
+    case 5: return 'Khamsat Arba\' / خمسة أرباع (Wide 2nd 250¢)';
+    default: return quarters >= 6 ? "Za'id / زائد (Augmented 2nd 300¢)" : `${quarters} Quarter-tones`;
+  }
 };
 
-export const Maqam53EdoChart: React.FC<Maqam53EdoChartProps> = ({
+export const Maqam24EdoChart: React.FC<Maqam24EdoChartProps> = ({
   currentMaqam,
   tuningSystem,
   activePlayingNote,
@@ -49,33 +49,38 @@ export const Maqam53EdoChart: React.FC<Maqam53EdoChartProps> = ({
   const [viewMode, setViewMode] = useState<EdoViewMode>('radial');
   const [selectedNode, setSelectedNode] = useState<EdoDegree | null>(null);
 
+  // Quarter-tone positions are read straight from the note names (Ed = E half-flat, etc.),
+  // so unlike the 53-EDO chart no separate step table is required.
   const degreesData = useMemo<EdoDegree[]>(() => {
-    const rawSeq = currentMaqam.commas53Sequence || [9, 7, 6, 9, 9, 7, 6];
     const notes = currentMaqam.scaleNotes;
-    let cum = 0;
+    const tonicPos = noteToQuarterTones(notes[0]) ?? 0;
+    let prev = 0;
     return notes.map((note, idx) => {
-      const step = idx === 0 ? 0 : rawSeq[idx - 1] || 9;
-      cum += step;
-      const cumUnits = idx === 0 ? 0 : idx === notes.length - 1 ? 53 : cum; // clamp octave degree
+      const pos = noteToQuarterTones(note);
+      let cumUnits = pos === null ? prev : pos - tonicPos;
+      if (idx === notes.length - 1 && cumUnits >= 24) cumUnits = 24; // octave degree
+      const step = idx === 0 ? 0 : Math.max(0, cumUnits - prev);
+      prev = cumUnits;
       return {
         degree: idx + 1,
         noteName: note,
         arabicName: ARABIC_NOTE_DICTIONARY[note]?.arabic || '',
         stepUnits: step,
         cumUnits,
-        cents: Math.round(cumUnits * COMMA_CENTS),
+        cents: cumUnits * QUARTER_CENTS,
         isTonic: idx === 0,
         isGhammaz: idx === 4,
         jinsType: idx <= 3 ? 'asl' : 'far',
-        intervalName: getIntervalArabicName(step),
-        angleRad: (cumUnits / 53) * 2 * Math.PI - Math.PI / 2,
+        intervalName: getIntervalName(step),
+        angleRad: (cumUnits / 24) * 2 * Math.PI - Math.PI / 2,
       };
     });
   }, [currentMaqam]);
 
   const ghammaz = degreesData[4];
+  const stepSequence = degreesData.slice(1).map((d) => d.stepUnits);
+  const totalQuarters = stepSequence.reduce((a, b) => a + b, 0);
 
-  // Auditioning a degree: clear the selection if the maqam changes underneath it.
   useEffect(() => setSelectedNode(null), [currentMaqam]);
 
   const handlePlayDegree = (d: EdoDegree) => {
@@ -90,7 +95,7 @@ export const Maqam53EdoChart: React.FC<Maqam53EdoChartProps> = ({
     const svg = d3.select(svgRef.current);
     const width = 800;
     const height = viewMode === 'radial' ? 560 : 380;
-    prepareSvg(svg, width, height, CONFIG.idPrefix, `53-EDO ${viewMode} chart for Maqam ${currentMaqam.name}`);
+    prepareSvg(svg, width, height, CONFIG.idPrefix, `24-EDO ${viewMode} chart for Maqam ${currentMaqam.name}`);
 
     const args = {
       svg, width, height, data: degreesData, cfg: CONFIG, palette: CHART_PALETTES[theme],
@@ -103,14 +108,13 @@ export const Maqam53EdoChart: React.FC<Maqam53EdoChartProps> = ({
     };
     if (viewMode === 'radial') renderRadialChart(args);
     else renderLinearChart(args);
-    // handlePlayDegree intentionally excluded: it only closes over tuningSystem / props used at click-time.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, degreesData, activePlayingNote, theme, tuningSystem]);
 
   return (
     <section
-      aria-label="53-EDO comma analysis"
-      className="bg-panel-deep border border-cyan-950/70 rounded-3xl p-5 sm:p-6 shadow-[0_0_35px_var(--glow-cyan)] backdrop-blur-md space-y-4"
+      aria-label="24-EDO quarter-tone analysis"
+      className="bg-panel-deep border border-amber-950/70 rounded-3xl p-5 sm:p-6 shadow-[0_0_35px_var(--glow-cyan)] backdrop-blur-md space-y-4"
     >
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-4">
         <div>
@@ -118,16 +122,16 @@ export const Maqam53EdoChart: React.FC<Maqam53EdoChartProps> = ({
             <span className="text-xs uppercase tracking-widest text-amber-400 font-mono font-semibold">
               Microtonal Interval Theory
             </span>
-            <span className="text-[10px] bg-cyan-950 text-cyan-400 border border-cyan-800/60 px-2 py-0.5 rounded-full font-mono">
-              Offtonic 53-EDO
+            <span className="text-[10px] bg-amber-950 text-amber-400 border border-amber-800/60 px-2 py-0.5 rounded-full font-mono">
+              Cairo 1932 · 24-EDO
             </span>
           </div>
           <h3 className="text-xl font-bold text-ink-strong flex items-center gap-2 mt-0.5">
-            <span>53-EDO Comma Step &amp; Tonic Pitch Analysis</span>
-            <span className="text-sm font-serif text-amber-300 font-normal">دائرة كومات المقام</span>
+            <span>24-EDO Quarter-Tone Step &amp; Tonic Pitch Analysis</span>
+            <span className="text-sm font-serif text-amber-300 font-normal">دائرة أرباع الصوت</span>
           </h3>
           <p className="text-xs text-ink-muted mt-0.5">
-            1 Octave = 53 commas (~22.64¢/comma). Click any node to audition its exact pitch and intervals.
+            1 Octave = 24 quarter-tones (50¢ each). Click any node to audition its pitch and interval.
           </p>
         </div>
         <EdoViewSwitcher value={viewMode} onChange={setViewMode} />
@@ -144,11 +148,11 @@ export const Maqam53EdoChart: React.FC<Maqam53EdoChartProps> = ({
               <span className="font-bold text-amber-300 text-sm">{selectedNode.noteName}</span>{' '}
               <span className="text-ink font-serif">({selectedNode.arabicName})</span>
               <div className="text-[11px] text-cyan-300 font-mono mt-0.5">
-                Distance: {selectedNode.cumUnits} commas ({selectedNode.cents}¢)
+                Distance: {selectedNode.cumUnits} quarter-tones ({selectedNode.cents}¢)
               </div>
               {selectedNode.stepUnits > 0 && (
                 <div className="text-[11px] text-ink-muted mt-0.5">
-                  Step: +{selectedNode.stepUnits}k · {selectedNode.intervalName}
+                  Step: +{selectedNode.stepUnits}q · {selectedNode.intervalName}
                 </div>
               )}
             </div>
@@ -157,23 +161,24 @@ export const Maqam53EdoChart: React.FC<Maqam53EdoChartProps> = ({
           )}
         </EdoStatCard>
 
-        <EdoStatCard label="53-Comma Step Sequence">
-          <div className="font-mono text-amber-400 text-sm font-bold mt-1">
-            {(currentMaqam.commas53Sequence || [9, 7, 6, 9, 9, 7, 6]).join(' - ')}
-          </div>
+        <EdoStatCard label="24-EDO Step Sequence">
+          <div className="font-mono text-amber-400 text-sm font-bold mt-1">{stepSequence.join(' - ')}</div>
           <span className="text-ink-muted text-[10px] block mt-0.5">
-            Total = 53 commas = 1200.0 Cents (Pure Octave)
+            Total = {totalQuarters} quarter-tones = {totalQuarters * QUARTER_CENTS}¢
+            {totalQuarters === 24
+              ? ' (pure octave)'
+              : ` — upper degree sits ${(24 - totalQuarters) * QUARTER_CENTS}¢ below the octave`}
           </span>
         </EdoStatCard>
 
         <EdoStatCard label="Tonic Polarities">
           <div className="text-[11px] text-ink mt-1 space-y-0.5">
             <div>
-              Qarar (0k): <strong className="text-amber-400">{currentMaqam.tonicArabicName}</strong>
+              Qarar (0q): <strong className="text-amber-400">{currentMaqam.tonicArabicName}</strong>
             </div>
             <div>
-              Ghammaz ({ghammaz?.cumUnits ?? 31}k): <strong className="text-cyan-400">{currentMaqam.ghammazArabicName}</strong>{' '}
-              (~{ghammaz?.cents ?? 702}¢)
+              Ghammaz ({ghammaz?.cumUnits ?? 14}q): <strong className="text-cyan-400">{currentMaqam.ghammazArabicName}</strong>{' '}
+              ({ghammaz?.cents ?? 700}¢)
             </div>
           </div>
         </EdoStatCard>
