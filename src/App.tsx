@@ -1,28 +1,46 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MAQAM_DATASET } from './data/maqamat';
-import { MaqamScale, TuningSystem, ViolinTuningPreset } from './types/maqam';
-import { audioEngine } from './services/audioEngine';
-import { ViolinFingerboard } from './components/ViolinFingerboard';
-import { MaqamSelector } from './components/MaqamSelector';
-import { Maqam53EdoChart } from './components/Maqam53EdoChart';
-import { MaqamInfoCard } from './components/MaqamInfoCard';
-import { MainMenu } from './components/MainMenu';
-import { MaqamBuilderDrawer } from './components/MaqamBuilderDrawer';
-import { SettingsModal, loadStoredSettings, AppSettings } from './components/SettingsModal';
-import { AboutModal } from './components/AboutModal';
-import { ExitModal } from './components/ExitModal';
-import { RotateCcw, PowerOff } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { MAQAM_DATASET } from "./data/maqamat";
+import { MaqamScale, TuningSystem, ViolinTuningPreset } from "./types/maqam";
+import { audioEngine } from "./services/audioEngine";
+import { ViolinFingerboard } from "./components/ViolinFingerboard";
+import { MaqamSelector } from "./components/MaqamSelector";
+import { Maqam53EdoChart } from "./components/Maqam53EdoChart";
+import { MaqamInfoCard } from "./components/MaqamInfoCard";
+import { MainMenu } from "./components/MainMenu";
+import { MaqamBuilderDrawer } from "./components/MaqamBuilderDrawer";
+import {
+  SettingsModal,
+  loadStoredSettings,
+  AppSettings,
+} from "./components/SettingsModal";
+import { AboutModal } from "./components/AboutModal";
+import { ExitModal } from "./components/ExitModal";
+import { RotateCcw, PowerOff, Sun, Moon } from "lucide-react";
+import { useTheme } from "./context/ThemeContext";
 
 export const App: React.FC = () => {
+  const { theme, setTheme, toggleTheme } = useTheme();
+  const isLight = theme === "light";
+
   // Load initial settings from localStorage if available
-  const [appSettings, setAppSettings] = useState<AppSettings>(() => loadStoredSettings());
-  
-  const initialMaqam = MAQAM_DATASET.find(m => m.id === appSettings.defaultMaqamId) || MAQAM_DATASET[0];
+  const [appSettings, setAppSettings] = useState<AppSettings>(() =>
+    loadStoredSettings(),
+  );
+
+  const initialMaqam =
+    MAQAM_DATASET.find((m) => m.id === appSettings.defaultMaqamId) ||
+    MAQAM_DATASET[0];
   const [currentMaqam, setCurrentMaqam] = useState<MaqamScale>(initialMaqam);
-  const [tuningSystem, setTuningSystem] = useState<TuningSystem>(appSettings.defaultTuningSystem);
-  const [violinTuning, setViolinTuning] = useState<ViolinTuningPreset>(appSettings.defaultViolinTuning);
-  
-  const [activePlayingNote, setActivePlayingNote] = useState<string | null>(null);
+  const [tuningSystem, setTuningSystem] = useState<TuningSystem>(
+    appSettings.defaultTuningSystem,
+  );
+  const [violinTuning, setViolinTuning] = useState<ViolinTuningPreset>(
+    appSettings.defaultViolinTuning,
+  );
+
+  const [activePlayingNote, setActivePlayingNote] = useState<string | null>(
+    null,
+  );
   const [lastFrequency, setLastFrequency] = useState<number | null>(null);
   const [isPlayingScale, setIsPlayingScale] = useState(false);
   const [isDroneOn, setIsDroneOn] = useState(false);
@@ -40,19 +58,36 @@ export const App: React.FC = () => {
   // Cleanup Web Audio timers on unmount
   useEffect(() => {
     return () => {
-      scalePlayTimeoutRef.current.forEach(t => clearTimeout(t));
+      scalePlayTimeoutRef.current.forEach((t) => clearTimeout(t));
       audioEngine.stopDrone();
     };
   }, []);
 
   // Convert note string like "C4", "Ed4", "F#4", "Bb3" into exact Hz
-  const getFrequencyForNoteName = (noteName: string, system: TuningSystem): number => {
-    const isQuarter = noteName.includes('d');
-    const cleanName = noteName.replace('d', '');
+  const getFrequencyForNoteName = (
+    noteName: string,
+    system: TuningSystem,
+  ): number => {
+    const isQuarter = noteName.includes("d");
+    const cleanName = noteName.replace("d", "");
     const noteMap: Record<string, number> = {
-      'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3,
-      'E': 4, 'F': 5, 'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8,
-      'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11
+      C: 0,
+      "C#": 1,
+      Db: 1,
+      D: 2,
+      "D#": 3,
+      Eb: 3,
+      E: 4,
+      F: 5,
+      "F#": 6,
+      Gb: 6,
+      G: 7,
+      "G#": 8,
+      Ab: 8,
+      A: 9,
+      "A#": 10,
+      Bb: 10,
+      B: 11,
     };
 
     const match = cleanName.match(/^([A-G][#b]?)([0-9])$/);
@@ -67,7 +102,7 @@ export const App: React.FC = () => {
       midi,
       isQuarter ? -1 : 0,
       system,
-      commaOffset
+      commaOffset,
     );
   };
 
@@ -83,7 +118,7 @@ export const App: React.FC = () => {
   // Cancel scale playback when switching Maqamat
   useEffect(() => {
     if (isPlayingScale) {
-      scalePlayTimeoutRef.current.forEach(t => clearTimeout(t));
+      scalePlayTimeoutRef.current.forEach((t) => clearTimeout(t));
       scalePlayTimeoutRef.current = [];
       setIsPlayingScale(false);
       setActivePlayingNote(null);
@@ -101,7 +136,7 @@ export const App: React.FC = () => {
     setActivePlayingNote(noteKey);
     setLastFrequency(freq);
     setTimeout(() => {
-      setActivePlayingNote(prev => (prev === noteKey ? null : prev));
+      setActivePlayingNote((prev) => (prev === noteKey ? null : prev));
     }, 450);
   };
 
@@ -111,7 +146,7 @@ export const App: React.FC = () => {
   const handlePlayScale = () => {
     // If audition is already in progress, stop it cleanly
     if (isPlayingScale) {
-      scalePlayTimeoutRef.current.forEach(t => clearTimeout(t));
+      scalePlayTimeoutRef.current.forEach((t) => clearTimeout(t));
       scalePlayTimeoutRef.current = [];
       setIsPlayingScale(false);
       setActivePlayingNote(null);
@@ -119,20 +154,20 @@ export const App: React.FC = () => {
     }
 
     setIsPlayingScale(true);
-    scalePlayTimeoutRef.current.forEach(t => clearTimeout(t));
+    scalePlayTimeoutRef.current.forEach((t) => clearTimeout(t));
     scalePlayTimeoutRef.current = [];
 
     // Ascending pathway, followed by authentic descending pathway
     const notesToPlay = [
       ...currentMaqam.scaleNotes,
-      ...(currentMaqam.descendingNotes 
-        ? currentMaqam.descendingNotes.slice(1) 
-        : [...currentMaqam.scaleNotes].slice(0, -1).reverse())
+      ...(currentMaqam.descendingNotes
+        ? currentMaqam.descendingNotes.slice(1)
+        : [...currentMaqam.scaleNotes].slice(0, -1).reverse()),
     ];
 
-    const NOTE_INTERVAL_MS = 650;  // Gap between note attacks (ms)
-    const NOTE_PLAY_SEC = 0.65;     // Audio engine bowing duration (seconds)
-    const NOTE_PERSIST_MS = 590;    // Duration the note remains visibly highlighted (ms)
+    const NOTE_INTERVAL_MS = 650; // Gap between note attacks (ms)
+    const NOTE_PLAY_SEC = 0.65; // Audio engine bowing duration (seconds)
+    const NOTE_PERSIST_MS = 590; // Duration the note remains visibly highlighted (ms)
 
     notesToPlay.forEach((note, index) => {
       const startTime = index * NOTE_INTERVAL_MS;
@@ -140,14 +175,16 @@ export const App: React.FC = () => {
       const noteTimer = window.setTimeout(() => {
         const freq = getFrequencyForNoteName(note, tuningSystem);
         audioEngine.playNote(freq, NOTE_PLAY_SEC);
-        
+
         // Real-time visual highlight on the ViolinFingerboard
         setActivePlayingNote(note);
         setLastFrequency(freq);
 
         // Persist the highlight for the duration of this note's playback
         const clearTimer = window.setTimeout(() => {
-          setActivePlayingNote(current => (current === note ? null : current));
+          setActivePlayingNote((current) =>
+            current === note ? null : current,
+          );
         }, NOTE_PERSIST_MS);
         scalePlayTimeoutRef.current.push(clearTimer);
 
@@ -178,7 +215,12 @@ export const App: React.FC = () => {
     setAppSettings(newSettings);
     setTuningSystem(newSettings.defaultTuningSystem);
     setViolinTuning(newSettings.defaultViolinTuning);
-    const targetMaqam = MAQAM_DATASET.find(m => m.id === newSettings.defaultMaqamId);
+    if (newSettings.defaultTheme) {
+      setTheme(newSettings.defaultTheme);
+    }
+    const targetMaqam = MAQAM_DATASET.find(
+      (m) => m.id === newSettings.defaultMaqamId,
+    );
     if (targetMaqam) {
       setCurrentMaqam(targetMaqam);
     }
@@ -192,7 +234,7 @@ export const App: React.FC = () => {
   // Handle application termination
   const handleConfirmExit = () => {
     // Cancel all running playback
-    scalePlayTimeoutRef.current.forEach(t => clearTimeout(t));
+    scalePlayTimeoutRef.current.forEach((t) => clearTimeout(t));
     scalePlayTimeoutRef.current = [];
     setIsPlayingScale(false);
     setActivePlayingNote(null);
@@ -222,10 +264,14 @@ export const App: React.FC = () => {
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-white flex items-center justify-center gap-2">
               <span>Workstation Terminated</span>
-              <span className="text-sm font-serif text-amber-300 font-normal">تم إنهاء الجلسة</span>
+              <span className="text-sm font-serif text-amber-300 font-normal">
+                تم إنهاء الجلسة
+              </span>
             </h1>
             <p className="text-xs sm:text-sm text-stone-400 leading-relaxed">
-              All microtonal sound oscillators and audition timers have been safely discharged. Thank you for using the Arabic Violin Maqam Lab.
+              All microtonal sound oscillators and audition timers have been
+              safely discharged. Thank you for using the Arabic Violin Maqam
+              Lab.
             </p>
           </div>
 
@@ -245,27 +291,54 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans selection:bg-amber-500 selection:text-stone-950">
+    <div
+      className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
+        isLight
+          ? "bg-slate-50 text-slate-900 selection:bg-amber-400 selection:text-slate-950"
+          : "bg-stone-950 text-stone-100 selection:bg-amber-500 selection:text-stone-950"
+      }`}
+    >
       {/* Top Navigation Bar */}
-      <header className="border-b border-stone-800/80 bg-stone-950/85 backdrop-blur-md sticky top-0 z-40 px-4 sm:px-6 py-3.5">
+      <header
+        className={`border-b sticky top-0 z-40 px-4 sm:px-6 py-3.5 backdrop-blur-md transition-colors duration-200 ${
+          isLight
+            ? "border-slate-200 bg-white/90 text-slate-900 shadow-sm"
+            : "border-stone-800/80 bg-stone-950/85 text-white"
+        }`}
+      >
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20 text-stone-950 font-bold text-xl select-none">
               🎻
             </div>
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+              <h1
+                className={`text-lg font-bold tracking-tight flex items-center gap-2 ${isLight ? "text-slate-900" : "text-white"}`}
+              >
                 <span>Arabic Violin Maqam Lab</span>
-                <span className="text-xs font-serif text-amber-400 font-normal">مختبر مقامات الكمان العربي</span>
+                <span
+                  className={`text-xs font-serif font-normal ${isLight ? "text-amber-700" : "text-amber-400"}`}
+                >
+                  مختبر مقامات الكمان العربي
+                </span>
               </h1>
-              <p className="text-xs text-stone-400">Microtonal Fretless Violin &amp; Maqamat Explorer (24-EDO &amp; 53-EDO)</p>
+              <p
+                className={`text-xs ${isLight ? "text-slate-500" : "text-stone-400"}`}
+              >
+                Microtonal Fretless Violin &amp; Maqamat Explorer (24-EDO &amp;
+                53-EDO)
+              </p>
             </div>
           </div>
 
-          {/* Volume, Status Indicators, and Main Menu */}
-          <div className="flex items-center gap-3 sm:gap-5">
+          {/* Volume, Status Indicators, Theme Toggle, and Main Menu */}
+          <div className="flex items-center gap-2.5 sm:gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-xs text-stone-400">Volume</span>
+              <span
+                className={`text-xs ${isLight ? "text-slate-500" : "text-stone-400"}`}
+              >
+                Volume
+              </span>
               <input
                 type="range"
                 min="0"
@@ -279,11 +352,42 @@ export const App: React.FC = () => {
             </div>
 
             {lastFrequency && (
-              <div className="hidden md:flex items-center gap-1.5 bg-stone-900 border border-stone-800 px-3 py-1 rounded-full text-xs font-mono text-amber-400">
-                <span className="text-stone-500">Freq:</span>
+              <div
+                className={`hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono ${
+                  isLight
+                    ? "bg-slate-100 border border-slate-200 text-amber-700 font-bold"
+                    : "bg-stone-900 border border-stone-800 text-amber-400"
+                }`}
+              >
+                <span className={isLight ? "text-slate-400" : "text-stone-500"}>
+                  Freq:
+                </span>
                 <span className="font-bold">{lastFrequency.toFixed(1)} Hz</span>
               </div>
             )}
+
+            {/* Quick Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className={`p-2 rounded-xl border text-xs font-medium transition-all shadow-sm cursor-pointer active:scale-95 flex items-center justify-center ${
+                isLight
+                  ? "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 hover:border-amber-500"
+                  : "border-stone-800 bg-stone-900 text-amber-400 hover:bg-stone-850 hover:border-amber-500/50"
+              }`}
+              title={
+                isLight
+                  ? "Switch to Dark Mode (الوضع الليلي)"
+                  : "Switch to Light Mode (الوضع النهاري)"
+              }
+              aria-label="Toggle Light/Dark Theme"
+            >
+              {isLight ? (
+                <Moon className="w-4 h-4 text-slate-700" />
+              ) : (
+                <Sun className="w-4 h-4 text-amber-400" />
+              )}
+            </button>
 
             {/* Responsive Main Menu with Submenu Buttons */}
             <MainMenu
@@ -350,10 +454,7 @@ export const App: React.FC = () => {
       />
 
       {/* Modal: About Alert Dialog */}
-      <AboutModal
-        isOpen={isAboutOpen}
-        onClose={() => setIsAboutOpen(false)}
-      />
+      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
 
       {/* Modal: Exit Confirmation Dialog */}
       <ExitModal
@@ -363,12 +464,20 @@ export const App: React.FC = () => {
       />
 
       {/* Footer */}
-      <footer className="border-t border-stone-800/80 py-6 text-center text-xs text-stone-500 px-4">
+      <footer
+        className={`border-t py-6 text-center text-xs px-4 transition-colors ${
+          isLight
+            ? "border-slate-200 text-slate-500"
+            : "border-stone-800/80 text-stone-500"
+        }`}
+      >
         <p>
-          Derived from the theoretical treatises of the 1932 Cairo Congress of Arab Music, Offtonic Comma Theory, and MaqamWorld.
+          Derived from the theoretical treatises of the 1932 Cairo Congress of
+          Arab Music, Offtonic Comma Theory, and MaqamWorld.
         </p>
-        <p className="mt-1 text-stone-600">
-          Features authentic 24-EDO Quarter-Tones, 53-EDO Ottoman Commas, and G3-D4-G4-D5 Arabic Violin scordatura.
+        <p className={`mt-1 ${isLight ? "text-slate-400" : "text-stone-600"}`}>
+          Features authentic 24-EDO Quarter-Tones, 53-EDO Ottoman Commas, and
+          G3-D4-G4-D5 Arabic Violin scordatura.
         </p>
       </footer>
     </div>
