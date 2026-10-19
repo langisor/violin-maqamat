@@ -128,32 +128,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     sayrNotes:
       "Begins with Rast on C4, moves to Saba on Husiany (A4), and finally to Hijaz on Kirdan (C5).",
   },
-  {
-    id: "nishaburk",
-    name: "Nishaburk",
-    arabicName: "نيشبورك",
-    family: "Rast",
-    tonicNote: "D4",
-    tonicArabicName: "Rast (D4)",
-    ghammazArabicName: "Nawa (G4)",
-    // note: F note has a half sharp
-    scaleNotes: ["D4", "E4", "F4", "G4", "A4", "Bd4", "C5", "D5"],
-    commas53Sequence: [9, 7, 6, 9, 9, 7, 6],
-    jinsAsl: {
-      name: "Jins Rast (on D4)",
-      tonicArabicName: "Dukah (D4)",
-      intervalsInCents: [204, 158, 138],
-      description: "Rast on D4 and F4 has a half sharp.",
-    },
-    jinsFar: {
-      name: "Jins Rast (on G4)",
-      tonicArabicName: "Nawa (G4)",
-      intervalsInCents: [204, 158, 138],
-      description: "Rast on G4.",
-    },
-    sayrNotes:
-      "Begins with Rast on D4 and emphasizes the half sharp on F4 for a unique melodic color. Moves to Nawa (G4) and concludes with a return to Dukah (D4).",
-  },
+  
   {
     id: "yakah",
     name: "Yakah",
@@ -168,7 +143,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
       name: "Jins Rast on G3",
       tonicArabicName: "Yakah (G3)",
       intervalsInCents: [136, 158, 204],
-      description: "Lower Rast on G3 with a unique descending pathway.",
+      description: "Lower Rast on G3 with a unique ascending pathway.",
     },
     jinsFar: {
       name: "Bayati on D4",
@@ -177,7 +152,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
       description: "Secondary Bayati on D4.",
     },
     sayrNotes:
-      "Start descending from G4 to tonic D4 and then the lower Rast starting decendly (C4,Bd3,A3,G3) emphasizing the unique melodic movement of this maqam.",
+      "Maqam Yakah is an archaic version of Maqam Nairuz, based on note G3 in the Arabic archaic 24-tone scale (named “Yakah”) rather than note C4.",
   },
   
 
@@ -204,10 +179,10 @@ export const MAQAM_DATASET: MaqamScale[] = [
       name: "Jins Nahwand",
       tonicArabicName: "Nawa (G4)",
       intervalsInCents: [204, 91, 204],
-      description: "Secondary Nahwand on G4.",
+      description: "Secondary Nahwand on G4. And can be Rast",
     },
     sayrNotes:
-      "Extremely popular and versatile. Starts with lingering around Dukah (D4) and Sikah (Ed4), elevates to G4 for Nahwand or Bayat on A, descending gracefully.",
+      "Extremely popular and versatile. Starts with lingering around Dukah (D4) and Sikah (Ed4), elevates to G4 for Nahwand or Rast on A, descending gracefully.",
   },
   {
     id: "bayati-shuri",
@@ -232,7 +207,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
       description: "Upper Hijaz on G4.",
     },
     sayrNotes:
-      "Combines the introspective nature of Bayati with the intense, ornate color of Hijaz on the dominant G4.",
+      "Combines the introspective nature of Bayati with lowered 5th degree (A4->Ab4) with the intense, ornate color of Hijaz on the dominant G4.",
   },
   {
     id: "husayni",
@@ -259,32 +234,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     sayrNotes:
       "Begins prominently around A4 (Husayni), emphasizing upper Bayati or Kurd before dropping down to conclude on Dukah (D4).",
   },
-   {
-    id: "arazbar",
-    name: "Arazbar",
-    arabicName: "عرزبر",
-    family: "Bayati",
-    tonicNote: "D4",
-    tonicArabicName: "Dukah (D4)",
-    ghammazArabicName: "Jiharkah (F4)",
-    scaleNotes: ["D4", "Ed4", "F4", "G4", "Ad4", "Bd4", "C5"],
-    commas53Sequence: [6, 7, 9, 6, 7, 9],
-    jinsAsl: {
-      name: "Jins Bayati",
-      tonicArabicName: "Dukah (D4)",
-      intervalsInCents: [136, 158, 204],
-      description: "Bayati on D4.",
-    },
-    jinsFar: {
-      name: "Jins Rast on F4 (upper) + C5",
-      tonicArabicName: "Jiharkah (F4)",
-      intervalsInCents: [204, 158, 138],
-      description: "Rast on F4.",
-    },
-    sayrNotes:
-      "Begins with Bayati on D4, ascends to Jiharkah (F4) for upper Rast + C5",
-  },
-
+  
   // --- 3. SIKAH FAMILY ---
   {
     id: "sikah",
@@ -309,7 +259,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
       description: "double Upper Rast starting on G4 and C5.",
     },
     sayrNotes:
-      "Tonic is Ed4 (Sikah). Never starts on standard D or C, but directly leans on the microtonal root Ed4. then resolve up to upper Rast on G4 and continue to Rast on C5",
+      "Tonic is Ed4 (Sikah). Never starts on standard D or C, but directly leans on the microtonal root Ed4. then resolve up to upper Rast on G4 and continue to Rast on C5 to octave note (Ed5)",
   },
   {
     id: "huzam",
@@ -326,6 +276,31 @@ export const MAQAM_DATASET: MaqamScale[] = [
       tonicArabicName: "Sikah (Ed4)",
       intervalsInCents: [136, 204, 204],
       description: "Sikah on Ed4.",
+    },
+    jinsFar: {
+      name: "Jins Hijaz",
+      tonicArabicName: "Nawa (G4)",
+      intervalsInCents: [113, 272, 113],
+      description: "Hijaz on G4 featuring Ab4 and B4.",
+    },
+    sayrNotes:
+      "Start Sikah on Ed4 then move to Hijaz on G4 and append Rast on C5 and end in Ed5",
+  },
+{
+    id: "Rahat-al-arwah",
+    name: "Rahat Al Arawh",
+    arabicName: "راحة الأرواح",
+    family: "Sikah",
+    tonicNote: "Ed4",
+    tonicArabicName: "Sikah (Bd3)",
+    ghammazArabicName: "Nawa (G4)",
+    scaleNotes: ["Bd3", "B3", "C4", "Db4", "F4",Gb4,Ab4,Bd3],
+    commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
+    jinsAsl: {
+      name: "Jins Sikah",
+      tonicArabicName: "Irag (Bd3)",
+      intervalsInCents: [136, 204, 204],
+      description: "Sikah on Bd3.",
     },
     jinsFar: {
       name: "Jins Hijaz",
@@ -354,11 +329,11 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     jinsFar: {
       name: "Jins Bayati",
-      tonicArabicName: "Dukah (D4)",
+      tonicArabicName: "Rast (C4)",
       intervalsInCents: [136, 158, 204],
-      description: "Bayati on D4.",
+      description: "Bayati on C4.",
     },
-    sayrNotes: "Low register Sikah variant transposed to Qarar Iraq (Bd3).",
+    sayrNotes: "Sikah then Hijaz then Rast",
   },
 
   // --- 4. HIJAZ FAMILY ---
