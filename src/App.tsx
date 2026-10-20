@@ -391,8 +391,14 @@ export const App: React.FC = () => {
       {/* Footer */}
       <footer className="border-t border-line py-6 text-center text-xs px-4 text-ink-muted transition-colors">
         <p>
-          Derived from the theoretical treatises of the 1932 Cairo Congress of
-          Arab Music, Offtonic Comma Theory, and MaqamWorld.
+          Maqam and jins terminology follows{' '}
+          <a className="text-amber-400 hover:underline" href="https://www.maqamworld.com/en/maqam.php" target="_blank" rel="noreferrer">
+            MaqamWorld’s Maqam reference
+          </a>{' '}
+          and its{' '}
+          <a className="text-amber-400 hover:underline" href="https://www.maqamworld.com/en/jins.php" target="_blank" rel="noreferrer">
+            Jins reference
+          </a>.
         </p>
         <p className="mt-1 text-ink-faint">
           Features authentic 24-EDO Quarter-Tones, and

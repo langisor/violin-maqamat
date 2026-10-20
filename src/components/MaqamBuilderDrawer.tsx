@@ -76,8 +76,6 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
     const basePitch = match[1];
     const oct = parseInt(match[2], 10);
     const midi = (oct + 1) * 12 + (noteMap[basePitch] || 0);
-    const commaOffset = isQuarter ? -2 : 0;
-
     return audioEngine.calculateFrequency(midi, isQuarter ? -1 : 0, tuningSystem );
   };
 

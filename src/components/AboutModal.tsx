@@ -54,7 +54,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
               <span className="text-emerald-400">✦</span> Fretless Ebony Fingerboard with Sayr Real-time Tracking
             </div>
             <div className="flex items-center gap-2 text-ink font-semibold">
-              <span className="text-purple-400">✦</span> Cairo Congress 1932 &amp; MaqamWorld Modal Analysis
+              <span className="text-purple-400">✦</span> MaqamWorld Jins &amp; Maqam References
             </div>
           </div>
 

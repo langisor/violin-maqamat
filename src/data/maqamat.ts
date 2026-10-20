@@ -1,15 +1,35 @@
 import { MaqamScale } from "../types/maqam";
 
 export const MAQAM_FAMILIES = [
-  "Rast",
-  "Bayati",
-  "Sikah",
-  "Hijaz",
-  "Nahwand",
-  "Kurd",
-  "Saba",
   "Ajam",
+  "Bayati",
+  "Hijaz",
+  "Kurd",
+  "Nahwand",
+  "Nikriz",
+  "Rast",
+  "Sikah",
+  "Independent",
 ] as const;
+
+/**
+ * Names and classification from MaqamWorld's Maqam Index. Some entries are
+ * intentionally catalogued here before they receive a playable local scale,
+ * because the source documents them as irregular or non-family maqamat.
+ */
+export const MAQAM_SOURCE_INDEX = {
+  families: {
+    Ajam: ["Ajam", "Ajam Ushayran", "Shawq Afza"],
+    Bayati: ["Bayati", "Bayati Shuri", "Husayni", "Muhayyar"],
+    Hijaz: ["Hijaz", "Hijazkar", "Shadd Araban", "Shahnaz", "Suzidil", "Zanjaran"],
+    Kurd: ["Kurd", "Hijazkar Kurd"],
+    Nahwand: ["Nahwand", "Farahfaza", "Nahwand Murassa", "Ushaq Masri"],
+    Nikriz: ["Nikriz", "Nawa Athar", "Athar Kurd"],
+    Rast: ["Rast", "Kirdan", "Sazkar", "Suznak", "Nairuz", "Yakah", "Dalanshin", "Suzdalara", "Mahur"],
+    Sikah: ["Sikah", "Huzam", "Rahat al-Arwah", "Iraq", "Awj Iraq", "Bastanikar", "Musta'ar"],
+  },
+  independent: ["Jiharkah", "Lami", "Saba", "Saba Zamzam", "Sikah Baladi"],
+} as const;
 
 export const MAQAM_DATASET: MaqamScale[] = [
   // --- 1. RAST FAMILY ---
@@ -23,11 +43,10 @@ export const MAQAM_DATASET: MaqamScale[] = [
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "D4", "Ed4", "F4", "G4", "A4", "Bd4", "C5"],
     descendingNotes: ["C5", "Bd4", "A4", "G4", "F4", "Ed4", "D4", "C4"],
-    //commas53Sequence: [9, 7, 6, 9, 9, 7, 6], // Rast on C + Rast on G
     jinsAsl: {
       name: "Jins Rast",
       tonicArabicName: "Rast (C4)",
-      intervalsInCents: [204, 158, 138], // 9, 7, 6 commas
+      intervalsInCents: [200, 150, 150, 200],
       description:
         "Neutral 3rd (Sikah) on Ed4. The quintessential foundation of Arabic music.",
     },
@@ -40,6 +59,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Starts on Qarar Rast (C4), firmly establishes Jins Rast up to Nawa (G4), develops upper Rast or Nahwand on G, then descends with emphasis on Sikah (Ed4) resolving to Rast.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/rast.php",
   },
   {
     id: "suznak",
@@ -50,7 +70,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Rast (C4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "D4", "Ed4", "F4", "G4", "Ab4", "B4", "C5"],
-    //commas53Sequence: [9, 7, 6, 9, 5, 12, 5],
     jinsAsl: {
       name: "Jins Rast",
       tonicArabicName: "Rast (C4)",
@@ -60,11 +79,12 @@ export const MAQAM_DATASET: MaqamScale[] = [
     jinsFar: {
       name: "Jins Hijaz",
       tonicArabicName: "Nawa (G4)",
-      intervalsInCents: [113, 272, 113], // 5, 12, 5 commas
+      intervalsInCents: [113, 272, 113],
       description: "Upper Hijaz on G4 creating distinctive dramatic tension.",
     },
     sayrNotes:
       "Opens in lower Rast, moves to G4 to develop poignant Jins Hijaz melodies, and resolves down to C4.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/suznak.php",
   },
   {
     id: "nairuz",
@@ -75,7 +95,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Rast (C4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "D4", "Ed4", "F4", "G4", "Ad4", "Bb4", "C5"],
-    //commas53Sequence: [9, 7, 6, 9, 6, 7, 9],
     jinsAsl: {
       name: "Jins Rast",
       tonicArabicName: "Rast (C4)",
@@ -90,6 +109,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Blends the serenity of Rast with the yearning quality of Bayati on the 5th degree (G4).",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/nairuz.php",
   },
   {
     id: "dalanshin",
@@ -112,7 +132,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
       "E5",
       
     ],
-    //commas53Sequence: [9, 7, 6, 9, 6, 7, 9, 5, 12, 5],
     jinsAsl: {
       name: "Jins Rast",
       tonicArabicName: "Rast (C4)",
@@ -127,6 +146,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Begins with Rast on C4, moves to Saba on Husiany (A4), and finally to Hijaz on Kirdan (C5).",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/dalanshin.php",
   },
   
   {
@@ -138,7 +158,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Yakah G3",
     ghammazArabicName: "D4",
     scaleNotes: ["G3", "A3", "Bd3", "C4", "D4", "Ed4", "F4", "G4"],
-    //commas53Sequence: [9, 7, 6, 9, 9, 7, 6],
     jinsAsl: {
       name: "Jins Rast on G3",
       tonicArabicName: "Yakah (G3)",
@@ -153,6 +172,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Maqam Yakah is an archaic version of Maqam Nairuz, based on note G3 in the Arabic archaic 24-tone scale (named “Yakah”) rather than note C4.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/nairuz.php",
   },
   
 
@@ -167,7 +187,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["D4", "Ed4", "F4", "G4", "A4", "Bb4", "C5", "D5"],
     descendingNotes: ["D5", "C5", "Bb4", "A4", "G4", "F4", "Ed4", "D4"],
-    //commas53Sequence: [6, 7, 9, 9, 4, 9, 9], // Bayati on D + Nahwand on G
     jinsAsl: {
       name: "Jins Bayati",
       tonicArabicName: "Dukah (D4)",
@@ -183,6 +202,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Extremely popular and versatile. Starts with lingering around Dukah (D4) and Sikah (Ed4), elevates to G4 for Nahwand or Rast on A, descending gracefully.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/bayati.php",
   },
   {
     id: "bayati-shuri",
@@ -193,7 +213,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Dukah (D4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["D4", "Ed4", "F4", "G4", "Ab4", "B4", "C5", "D5"],
-    //commas53Sequence: [6, 7, 9, 5, 12, 5, 9],
     jinsAsl: {
       name: "Jins Bayati",
       tonicArabicName: "Dukah (D4)",
@@ -208,6 +227,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Combines the introspective nature of Bayati with lowered 5th degree (A4->Ab4) with the intense, ornate color of Hijaz on the dominant G4.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/bayati_shuri.php",
   },
   {
     id: "husayni",
@@ -218,7 +238,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Dukah (D4)",
     ghammazArabicName: "Husayni (A4)",
     scaleNotes: ["D4", "Ed4", "F4", "G4", "A4", "Bd4", "C5", "D5"],
-    //commas53Sequence: [6, 7, 9, 9, 6, 7, 9],
     jinsAsl: {
       name: "Jins Bayati",
       tonicArabicName: "Dukah (D4)",
@@ -233,6 +252,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Begins prominently around A4 (Husayni), emphasizing upper Bayati or Kurd before dropping down to conclude on Dukah (D4).",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/husayni.php",
   },
   
   // --- 3. SIKAH FAMILY ---
@@ -245,7 +265,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Sikah (Eb3)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["Ed4", "F4", "G4","A4","Bd4","C5","D5","Ed5"],
-    //commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
     jinsAsl: {
       name: "Jins Sikah",
       tonicArabicName: "Sikah (Ed4)",
@@ -260,6 +279,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Tonic is Ed4 (Sikah). Never starts on standard D or C, but directly leans on the microtonal root Ed4. then resolve up to upper Rast on G4 and continue to Rast on C5 to octave note (Ed5)",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/sikah.php",
   },
   {
     id: "huzam",
@@ -270,7 +290,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Sikah (Ed4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["Ed4", "F4", "G4", "Ab4", "B4", "C5", "D5", "Ed5"],
-    //commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
     jinsAsl: {
       name: "Jins Sikah",
       tonicArabicName: "Sikah (Ed4)",
@@ -285,6 +304,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Start Sikah on Ed4 then move to Hijaz on G4 and append Rast on C5 and end in Ed5",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/huzam.php",
   },
 {
     id: "Rahat-al-arwah",
@@ -295,7 +315,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Sikah (Bd3)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["Bd3", "B3", "C4", "Db4", "F4","Gb4","Ab4","Bd3"],
-    //commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
     jinsAsl: {
       name: "Jins Sikah",
       tonicArabicName: "Irag (Bd3)",
@@ -310,6 +329,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Start Sikah on Ed4 then move to Hijaz on G4 and append Rast on C5 and end in Ed5",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/rahat_al_arwah.php",
   },
   {
     id: "iraq",
@@ -320,7 +340,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Iraq (Bd3)",
     ghammazArabicName: "Dukah (D4)",
     scaleNotes: ["Bd3", "C4", "D4", "Ed4", "F4", "G4", "A4", "Bd4"],
-    //commas53Sequence: [6, 9, 6, 7, 9, 9, 7],
     jinsAsl: {
       name: "Jins Sikah",
       tonicArabicName: "Iraq (Bd3)",
@@ -334,6 +353,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
       description: "Bayati on C4.",
     },
     sayrNotes: "Sikah then Hijaz then Rast",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/iraq.php",
   },
 
   // --- 4. HIJAZ FAMILY ---
@@ -347,12 +367,11 @@ export const MAQAM_DATASET: MaqamScale[] = [
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["D4", "Eb4", "F#4", "G4", "A4", "Bb4", "C5", "D5"],
     descendingNotes: ["D5", "C5", "Bb4", "A4", "G4", "F#4", "Eb4", "D4"],
-    //commas53Sequence: [5, 12, 5, 9, 4, 9, 9], // 5, 12, 5 commas = Jins Hijaz
     jinsAsl: {
       name: "Jins Hijaz",
       tonicArabicName: "Dukah (D4)",
       intervalsInCents: [113, 272, 113],
-      description: "Augmented second between Eb4 and F#4 (12 commas).",
+      description: "Augmented second between Eb4 and F#4 (~272¢).",
     },
     jinsFar: {
       name: "Jins Nahwand",
@@ -363,17 +382,17 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Dramatic and fiery. Focuses around D4, flares up with Eb4 and F#4, moves through G4 before settling back.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/hijaz.php",
   },
   {
     id: "hijaz-kar",
-    name: "Hijaz Kar",
+    name: "Hijazkar",
     arabicName: "حجاز كار",
     family: "Hijaz",
     tonicNote: "C4",
     tonicArabicName: "Rast (C4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "Db4", "E4", "F4", "G4", "Ab4", "B4", "C5"],
-    //commas53Sequence: [5, 12, 5, 9, 5, 12, 5],
     jinsAsl: {
       name: "Jins Hijaz",
       tonicArabicName: "Rast (C4)",
@@ -389,6 +408,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     
     sayrNotes:
       "Double Hijaz trichord/tetrachord. Descending sayr starting from C5 down to C4.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/hijazkar.php",
     
   },
 
@@ -403,11 +423,10 @@ export const MAQAM_DATASET: MaqamScale[] = [
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "D4", "Eb4", "F4", "G4", "Ab4", "B4", "C5"],
     descendingNotes: ["C5", "Bb4", "Ab4", "G4", "F4", "Eb4", "D4", "C4"],
-    //commas53Sequence: [9, 4, 9, 9, 4, 9, 9],
     jinsAsl: {
       name: "Jins Nahwand",
       tonicArabicName: "Rast (C4)",
-      intervalsInCents: [204, 91, 204],
+      intervalsInCents: [200, 100, 200, 200],
       description: "Minor-sounding root tetrachord on C4.",
     },
     jinsFar: {
@@ -419,6 +438,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Harmonic minor ascent with melodic minor descending resolution.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/nahawand.php",
   },
 
   // --- 6. KURD FAMILY ---
@@ -431,7 +451,6 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Dukah (D4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["D4", "Eb4", "F4", "G4", "A4", "Bb4", "C5", "D5"],
-    //commas53Sequence: [4, 9, 9, 9, 4, 9, 9],
     jinsAsl: {
       name: "Jins Kurd",
       tonicArabicName: "Dukah (D4)",
@@ -446,19 +465,49 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Begins smoothly on D4, moves through Eb4 with tender Phrygian flavor to G4.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/kurd.php",
   },
 
-  // --- 7. SABA FAMILY ---
+  // --- 7. NIKRIZ FAMILY ---
+  {
+    id: "nikriz",
+    name: "Nikriz",
+    arabicName: "نكريز",
+    family: "Nikriz",
+    tonicNote: "C4",
+    tonicArabicName: "Rast (C4)",
+    ghammazArabicName: "Nawa (G4)",
+    scaleNotes: ["C4", "D4", "Eb4", "F#4", "G4", "Ab4", "B4", "C5"],
+    descendingNotes: ["C5", "B4", "Ab4", "G4", "F#4", "Eb4", "D4", "C4"],
+    jinsAsl: {
+      name: "Jins Nikriz",
+      tonicArabicName: "Rast (C4)",
+      intervalsInCents: [204, 113, 272, 113],
+      description: "Five-note root jins of the Nikriz family.",
+      sourceUrl: "https://www.maqamworld.com/en/jins/nikriz.php",
+    },
+    jinsFar: {
+      name: "Jins Nahwand",
+      tonicArabicName: "Nawa (G4)",
+      intervalsInCents: [204, 91, 204],
+      description: "Jins Nahwand centered on the fifth degree.",
+      sourceUrl: "https://www.maqamworld.com/en/jins/nahawand.php",
+    },
+    sayrNotes:
+      "The principal Nikriz maqam: Jins Nikriz on the tonic followed by Jins Nahwand on the fifth degree.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/nikriz.php",
+  },
+
+  // --- 8. INDEPENDENT MAQAMAT ---
   {
     id: "saba",
     name: "Saba",
     arabicName: "صبا",
-    family: "Saba",
+    family: "Independent",
     tonicNote: "D4",
     tonicArabicName: "Dukah (D4)",
     ghammazArabicName: "Jiharkah (F4)",
     scaleNotes: ["D4", "Ed4", "F4", "Gb4", "A4", "Bb4", "C5", "Db5"],
-    //commas53Sequence: [6, 7, 5, 12, 5, 9, 4],
     jinsAsl: {
       name: "Jins Saba",
       tonicArabicName: "Dukah (D4)",
@@ -473,9 +522,10 @@ export const MAQAM_DATASET: MaqamScale[] = [
     },
     sayrNotes:
       "Characterized by poignant sorrow and longing. The primary modulation is Hijaz starting on F4 (F4-Gb4-A4-Bb4).",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/saba.php",
   },
 
-  // --- 8. AJAM FAMILY ---
+  // --- 9. AJAM FAMILY ---
   {
     id: "ajam",
     name: "Ajam / Ajam Ushayran",
@@ -485,19 +535,19 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "qarar Ajam (Bb3)",
     ghammazArabicName: "Jiharkah (F4)",
     scaleNotes: ["Bb3", "C4", "D4", "Eb4", "F4", "G4", "A4", "Bb4"],
-    //commas53Sequence: [9, 8, 5, 9, 9, 8, 5],
     jinsAsl: {
       name: "Jins Ajam",
       tonicArabicName: "qarar Ajam (Bb3)",
-      intervalsInCents: [204, 181, 113],
+      intervalsInCents: [200, 200, 100, 200],
       description: "Major scale sound world.",
     },
     jinsFar: {
       name: "Jins Ajam",
       tonicArabicName: "Jiharkah (F4)",
-      intervalsInCents: [204, 181, 113],
+      intervalsInCents: [200, 200, 100, 200],
       description: "Upper Ajam on F4.",
     },
     sayrNotes: "Majestic and bright. Emphasizes the major triad on Bb3 and F4.",
+    sourceUrl: "https://www.maqamworld.com/en/maqam/ajam.php",
   },
 ];

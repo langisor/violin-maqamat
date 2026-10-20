@@ -39,7 +39,5 @@ export const getFrequencyForNoteName = (noteName: string, system: TuningSystem):
   if (!match) return 440;
 
   const midi = (parseInt(match[2], 10) + 1) * 12 + (noteMap[match[1]] ?? 0);
-  const commaOffset = isQuarter ? -2 : 0;
-
-  return audioEngine.calculateFrequency(midi, isQuarter ? -1 : 0, system, commaOffset);
+  return audioEngine.calculateFrequency(midi, isQuarter ? -1 : 0, system);
 };

@@ -3,8 +3,7 @@ import type { ChartPalette } from '../theme/chartPalette';
 
 /**
  * Shared D3 renderers for the equal-division-of-the-octave (EDO) analysis charts.
- * Maqam53EdoChart and Maqam24EdoChart each derive their own degree data and copy,
- * then delegate the drawing here so both stay visually and behaviourally identical.
+ * The 24-EDO chart derives its degree data and copy, then delegates the drawing here.
  */
 
 export interface EdoDegree {
@@ -22,8 +21,8 @@ export interface EdoDegree {
 }
 
 export interface EdoChartConfig {
-  divisions: number; // 53 or 24
-  unit: string; // 'k' (comma) or 'q' (quarter-tone)
+  divisions: number;
+  unit: string;
   majorEvery: number; // emphasised tick spacing
   labelEvery: number; // numeric ring label spacing
   hubTitle: string;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MaqamScale, TuningSystem } from '../types/maqam';
 import { Maqam24EdoChart } from './Maqam24EdoChart';
-// import { Maqam53EdoChart } from './Maqam53EdoChart';
 
 interface EdoChartSectionProps {
   currentMaqam: MaqamScale;

@@ -6,7 +6,6 @@ export interface MicrotoneNote {
   name: string;              // Western representation e.g. "Ed", "F#", "Bd"
   arabicName: string;        // Historical Arabic name e.g. "Sikah", "Rast", "Dukah"
   quarterIndex: number;      // 0 to 23 relative to C (each step = 50 cents)
-  //comma53Index: number;      // 0 to 52 relative to C (each step = 1200/53 cents)
   accidental: 'natural' | 'flat' | 'half-flat' | 'sharp' | 'half-sharp';
   cents: number;             // Offset in cents from C within the octave
 }
@@ -16,13 +15,14 @@ export interface Jins {
   tonicArabicName: string;
   intervalsInCents: number[]; // e.g. [150, 150, 200] for Rast
   description: string;
+  sourceUrl?: string;
 }
 
 export interface MaqamScale {
   id: string;
   name: string;
   arabicName: string;
-  family: 'Rast' | 'Bayati' | 'Sikah' | 'Hijaz' | 'Nahwand' | 'Kurd' | 'Saba' | 'Ajam' | 'Independant';
+  family: 'Rast' | 'Bayati' | 'Sikah' | 'Hijaz' | 'Nahwand' | 'Kurd' | 'Ajam' | 'Nikriz' | 'Independent';
   tonicNote: string;         // e.g. "C4", "D4", "Ed4", "Bb3"
   tonicArabicName: string;   // e.g. "Rast", "Dukah", "Sikah"
   ghammazArabicName: string; // Dominant/modulation degree e.g. "Nawa"
@@ -37,9 +37,10 @@ export interface MaqamScale {
    intervals?:number[]; // intervals in quarters 
  
   transportionMaqamat?:MaqamScale[]; //  ex. for hijazkar if the root tonic is G3 then the Maqam named `Shadd'Arban`, 'Suzidil' for  Hijazkar on low A 'Shahnaz' for Hijazkar on D4
+  sourceUrl?: string;
 }
 
-// 24 Quarter-Tone pitch map with Arabic note names across the central registers
+// 24-EDO quarter-tone pitch map with Arabic note names across the central registers.
 export const ARABIC_NOTE_DICTIONARY: Record<string, { arabic: string; accidental: MicrotoneNote['accidental'] }> = {
   // Octave 3 (Qarar)
   "C3": { arabic: "qarar Rast (قرار راست)", accidental: "natural" },
