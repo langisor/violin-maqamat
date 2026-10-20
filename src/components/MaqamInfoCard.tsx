@@ -48,22 +48,7 @@ export const MaqamInfoCard: React.FC<MaqamInfoCardProps> = ({ maqam }) => {
         </div>
       </div>
 
-      {/* 53-EDO Comma Breakdown */}
-      {maqam.commas53Sequence && (
-        <div className="bg-canvas/60 border border-line/80 rounded-xl p-3.5">
-          <div className="text-xs font-semibold text-ink flex flex-wrap items-center justify-between gap-2 mb-1.5">
-            <span>Offtonic 53-EDO Comma Step Intervals</span>
-            <span className="font-mono text-amber-400 text-xs tracking-wider bg-surface px-2 py-0.5 rounded border border-line">
-              {maqam.commas53Sequence.join(' - ')}
-            </span>
-          </div>
-          <p className="text-[11px] text-ink-muted leading-relaxed">
-            Where 9 commas = whole tone (Tanini, ~204¢), 6–7 commas = neutral second / Sikah (Mujannab, ~136¢–158¢), 
-            and 12–13 commas = augmented second in Hijaz (Fadla/Bu&apos;d Fatish, ~272¢).
-          </p>
-        </div>
-      )}
-
+     
       {/* Ajnas Analysis (Jins Asl vs Jins Far') */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Jins Asl */}

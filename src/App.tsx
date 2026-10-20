@@ -265,8 +265,7 @@ export const App: React.FC = () => {
                 </span>
               </h1>
               <p className="text-xs text-ink-muted">
-                Microtonal Fretless Violin &amp; Maqamat Explorer (24-EDO &amp;
-                53-EDO)
+                Microtonal Fretless Violin &amp; Maqamat Explorer (24-EDO)
               </p>
             </div>
           </div>
@@ -351,7 +350,7 @@ export const App: React.FC = () => {
           onNoteTrigger={handleNoteTrigger}
         />
 
-        {/* D3.js 24-EDO / 53-EDO Microtonal Interval & Tonic Relationship Charts */}
+        {/* D3.js 24-EDO Microtonal Interval & Tonic Relationship Charts */}
         <EdoChartSection
           currentMaqam={currentMaqam}
           tuningSystem={tuningSystem}
@@ -396,7 +395,7 @@ export const App: React.FC = () => {
           Arab Music, Offtonic Comma Theory, and MaqamWorld.
         </p>
         <p className="mt-1 text-ink-faint">
-          Features authentic 24-EDO Quarter-Tones, 53-EDO Ottoman Commas, and
+          Features authentic 24-EDO Quarter-Tones, and
           G3-D4-G4-D5 Arabic Violin scordatura.
         </p>
       </footer>

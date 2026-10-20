@@ -209,7 +209,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               className={selectCls}
             >
               <option value="24-EDO">24-EDO (Modern Quarter Tone - Cairo 1932 Congress)</option>
-              <option value="53-EDO">53-EDO (Classical Ottoman-Arab Offtonic Comma System)</option>
+           
               <option value="12-TET">12-TET (Western Equal Temperament)</option>
             </select>
             <p className={hintCls}>Defines the mathematical frequency division used for microtonal notes.</p>
@@ -269,7 +269,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
               <button
                 type="submit"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-on-accent shadow-lg shadow-cyan-500/20 transition-all cursor-pointer active:scale-95"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-linear-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-on-accent shadow-lg shadow-cyan-500/20 transition-all cursor-pointer active:scale-95"
               >
                 <Save className="w-4 h-4" />
                 <span>Save Options</span>

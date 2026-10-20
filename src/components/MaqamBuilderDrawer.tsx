@@ -78,7 +78,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
     const midi = (oct + 1) * 12 + (noteMap[basePitch] || 0);
     const commaOffset = isQuarter ? -2 : 0;
 
-    return audioEngine.calculateFrequency(midi, isQuarter ? -1 : 0, tuningSystem, commaOffset);
+    return audioEngine.calculateFrequency(midi, isQuarter ? -1 : 0, tuningSystem );
   };
 
   // Compute scale based on selected Jins slots
@@ -87,24 +87,8 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
     const jins2 = AJNAS_DATASET.find(j => j.id === slot2.jinsId) || AJNAS_DATASET[0];
     const jins3 = includeSlot3 ? AJNAS_DATASET.find(j => j.id === slot3.jinsId) : null;
 
-    // Build the combined 53-comma intervals
-    const combinedCommas: number[] = [
-      ...jins1.commasSequence,
-      // If there is a disjunction between Jins 1 and Jins 2 (fasila / whole tone step)
-      ...(jins1.type === 'trichord' && slot2.tonicNote === 'G4' ? [9] : []),
-      ...jins2.commasSequence,
-      ...(jins3 ? jins3.commasSequence : [])
-    ];
 
-    // Trim or standardize to octave interval sequence (sum ~ 53 commas)
-    let totalCommas = combinedCommas.reduce((a, b) => a + b, 0);
-    if (totalCommas < 53) {
-      combinedCommas.push(53 - totalCommas);
-    } else if (totalCommas > 53 && combinedCommas.length > 7) {
-      combinedCommas.length = 7;
-      totalCommas = combinedCommas.reduce((a, b) => a + b, 0);
-      if (totalCommas < 53) combinedCommas.push(53 - totalCommas);
-    }
+ 
 
     // Try finding matching predefined Maqam
     let matchedMaqam: MaqamScale | undefined = undefined;
@@ -135,25 +119,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
       const tonicMidi = notePitchMap[slot1.tonicNote] || 60;
       let currentMidi = tonicMidi;
       notes.push(slot1.tonicNote);
-
-      combinedCommas.forEach(commas => {
-        const semitones = commas * (12 / 53);
-        currentMidi += semitones;
-        // Find closest note from notePitchMap
-        let closestNote = 'C5';
-        let minDiff = 999;
-        Object.entries(notePitchMap).forEach(([k, v]) => {
-          const diff = Math.abs(v - currentMidi);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closestNote = k;
-          }
-        });
-        if (!notes.includes(closestNote)) {
-          notes.push(closestNote);
-        }
-      });
-
+ 
       // Ensure 8 notes
       if (notes.length < 8) {
         notes.push('C5');
@@ -170,7 +136,6 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
       tonicArabicName: ARABIC_NOTE_DICTIONARY[slot1.tonicNote]?.arabic || `${slot1.tonicNote}`,
       ghammazArabicName: ARABIC_NOTE_DICTIONARY[slot2.tonicNote]?.arabic || `${slot2.tonicNote}`,
       scaleNotes: notes.slice(0, 8),
-      commas53Sequence: combinedCommas.slice(0, 7),
       jinsAsl: jins1,
       jinsFar: jins2,
       sayrNotes: matchedMaqam ? matchedMaqam.sayrNotes : `Custom modal exploration starting on ${slot1.tonicNote} (${jins1.name}), modulating at ${slot2.tonicNote} to ${jins2.name}.`,
@@ -257,7 +222,6 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
       jins1,
       jins2,
       jins3,
-      combinedCommas: combinedCommas.slice(0, 7),
       quarterSteps,
       quarterFormula,
     };
@@ -302,7 +266,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
         {/* Drawer Header */}
         <div className="p-5 sm:p-6 border-b border-line flex items-center justify-between bg-canvas/70">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-on-accent font-bold shadow-lg shadow-amber-500/20">
+            <div className="w-10 h-10 rounded-xl bg-linear-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-on-accent font-bold shadow-lg shadow-amber-500/20">
               <Layers className="w-5 h-5 text-on-accent" />
             </div>
             <div>
@@ -593,12 +557,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
                 ))}
               </div>
             </div>
-
-            {/* Reference info for classical 53-EDO Commas */}
-            <div className="pt-2 border-t border-line/80 flex items-center justify-between text-[11px] text-ink-faint">
-              <span>Classical 53-EDO Commas: {builtScaleResult.combinedCommas.join(' - ')}k</span>
-              <span className="font-mono">Total = {builtScaleResult.combinedCommas.reduce((a, b) => a + b, 0)} Commas</span>
-            </div>
+ 
           </div>
         </div>
 

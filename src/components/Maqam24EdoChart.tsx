@@ -50,7 +50,6 @@ export const Maqam24EdoChart: React.FC<Maqam24EdoChartProps> = ({
   const [selectedNode, setSelectedNode] = useState<EdoDegree | null>(null);
 
   // Quarter-tone positions are read straight from the note names (Ed = E half-flat, etc.),
-  // so unlike the 53-EDO chart no separate step table is required.
   const degreesData = useMemo<EdoDegree[]>(() => {
     const notes = currentMaqam.scaleNotes;
     const tonicPos = noteToQuarterTones(notes[0]) ?? 0;

@@ -23,7 +23,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "D4", "Ed4", "F4", "G4", "A4", "Bd4", "C5"],
     descendingNotes: ["C5", "Bd4", "A4", "G4", "F4", "Ed4", "D4", "C4"],
-    commas53Sequence: [9, 7, 6, 9, 9, 7, 6], // Rast on C + Rast on G
+    //commas53Sequence: [9, 7, 6, 9, 9, 7, 6], // Rast on C + Rast on G
     jinsAsl: {
       name: "Jins Rast",
       tonicArabicName: "Rast (C4)",
@@ -50,7 +50,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Rast (C4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "D4", "Ed4", "F4", "G4", "Ab4", "B4", "C5"],
-    commas53Sequence: [9, 7, 6, 9, 5, 12, 5],
+    //commas53Sequence: [9, 7, 6, 9, 5, 12, 5],
     jinsAsl: {
       name: "Jins Rast",
       tonicArabicName: "Rast (C4)",
@@ -75,7 +75,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Rast (C4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "D4", "Ed4", "F4", "G4", "Ad4", "Bb4", "C5"],
-    commas53Sequence: [9, 7, 6, 9, 6, 7, 9],
+    //commas53Sequence: [9, 7, 6, 9, 6, 7, 9],
     jinsAsl: {
       name: "Jins Rast",
       tonicArabicName: "Rast (C4)",
@@ -112,7 +112,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
       "E5",
       
     ],
-    commas53Sequence: [9, 7, 6, 9, 6, 7, 9, 5, 12, 5],
+    //commas53Sequence: [9, 7, 6, 9, 6, 7, 9, 5, 12, 5],
     jinsAsl: {
       name: "Jins Rast",
       tonicArabicName: "Rast (C4)",
@@ -138,7 +138,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Yakah G3",
     ghammazArabicName: "D4",
     scaleNotes: ["G3", "A3", "Bd3", "C4", "D4", "Ed4", "F4", "G4"],
-    commas53Sequence: [9, 7, 6, 9, 9, 7, 6],
+    //commas53Sequence: [9, 7, 6, 9, 9, 7, 6],
     jinsAsl: {
       name: "Jins Rast on G3",
       tonicArabicName: "Yakah (G3)",
@@ -167,7 +167,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["D4", "Ed4", "F4", "G4", "A4", "Bb4", "C5", "D5"],
     descendingNotes: ["D5", "C5", "Bb4", "A4", "G4", "F4", "Ed4", "D4"],
-    commas53Sequence: [6, 7, 9, 9, 4, 9, 9], // Bayati on D + Nahwand on G
+    //commas53Sequence: [6, 7, 9, 9, 4, 9, 9], // Bayati on D + Nahwand on G
     jinsAsl: {
       name: "Jins Bayati",
       tonicArabicName: "Dukah (D4)",
@@ -193,7 +193,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Dukah (D4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["D4", "Ed4", "F4", "G4", "Ab4", "B4", "C5", "D5"],
-    commas53Sequence: [6, 7, 9, 5, 12, 5, 9],
+    //commas53Sequence: [6, 7, 9, 5, 12, 5, 9],
     jinsAsl: {
       name: "Jins Bayati",
       tonicArabicName: "Dukah (D4)",
@@ -218,7 +218,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Dukah (D4)",
     ghammazArabicName: "Husayni (A4)",
     scaleNotes: ["D4", "Ed4", "F4", "G4", "A4", "Bd4", "C5", "D5"],
-    commas53Sequence: [6, 7, 9, 9, 6, 7, 9],
+    //commas53Sequence: [6, 7, 9, 9, 6, 7, 9],
     jinsAsl: {
       name: "Jins Bayati",
       tonicArabicName: "Dukah (D4)",
@@ -245,7 +245,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Sikah (Eb3)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["Ed4", "F4", "G4","A4","Bd4","C5","D5","Ed5"],
-    commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
+    //commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
     jinsAsl: {
       name: "Jins Sikah",
       tonicArabicName: "Sikah (Ed4)",
@@ -270,7 +270,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Sikah (Ed4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["Ed4", "F4", "G4", "Ab4", "B4", "C5", "D5", "Ed5"],
-    commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
+    //commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
     jinsAsl: {
       name: "Jins Sikah",
       tonicArabicName: "Sikah (Ed4)",
@@ -294,8 +294,8 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicNote: "Ed4",
     tonicArabicName: "Sikah (Bd3)",
     ghammazArabicName: "Nawa (G4)",
-    scaleNotes: ["Bd3", "B3", "C4", "Db4", "F4",Gb4,Ab4,Bd3],
-    commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
+    scaleNotes: ["Bd3", "B3", "C4", "Db4", "F4","Gb4","Ab4","Bd3"],
+    //commas53Sequence: [6, 9, 5, 12, 5, 9, 7],
     jinsAsl: {
       name: "Jins Sikah",
       tonicArabicName: "Irag (Bd3)",
@@ -320,7 +320,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Iraq (Bd3)",
     ghammazArabicName: "Dukah (D4)",
     scaleNotes: ["Bd3", "C4", "D4", "Ed4", "F4", "G4", "A4", "Bd4"],
-    commas53Sequence: [6, 9, 6, 7, 9, 9, 7],
+    //commas53Sequence: [6, 9, 6, 7, 9, 9, 7],
     jinsAsl: {
       name: "Jins Sikah",
       tonicArabicName: "Iraq (Bd3)",
@@ -347,7 +347,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["D4", "Eb4", "F#4", "G4", "A4", "Bb4", "C5", "D5"],
     descendingNotes: ["D5", "C5", "Bb4", "A4", "G4", "F#4", "Eb4", "D4"],
-    commas53Sequence: [5, 12, 5, 9, 4, 9, 9], // 5, 12, 5 commas = Jins Hijaz
+    //commas53Sequence: [5, 12, 5, 9, 4, 9, 9], // 5, 12, 5 commas = Jins Hijaz
     jinsAsl: {
       name: "Jins Hijaz",
       tonicArabicName: "Dukah (D4)",
@@ -373,7 +373,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Rast (C4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "Db4", "E4", "F4", "G4", "Ab4", "B4", "C5"],
-    commas53Sequence: [5, 12, 5, 9, 5, 12, 5],
+    //commas53Sequence: [5, 12, 5, 9, 5, 12, 5],
     jinsAsl: {
       name: "Jins Hijaz",
       tonicArabicName: "Rast (C4)",
@@ -401,7 +401,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["C4", "D4", "Eb4", "F4", "G4", "Ab4", "B4", "C5"],
     descendingNotes: ["C5", "Bb4", "Ab4", "G4", "F4", "Eb4", "D4", "C4"],
-    commas53Sequence: [9, 4, 9, 9, 4, 9, 9],
+    //commas53Sequence: [9, 4, 9, 9, 4, 9, 9],
     jinsAsl: {
       name: "Jins Nahwand",
       tonicArabicName: "Rast (C4)",
@@ -429,7 +429,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Dukah (D4)",
     ghammazArabicName: "Nawa (G4)",
     scaleNotes: ["D4", "Eb4", "F4", "G4", "A4", "Bb4", "C5", "D5"],
-    commas53Sequence: [4, 9, 9, 9, 4, 9, 9],
+    //commas53Sequence: [4, 9, 9, 9, 4, 9, 9],
     jinsAsl: {
       name: "Jins Kurd",
       tonicArabicName: "Dukah (D4)",
@@ -456,7 +456,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "Dukah (D4)",
     ghammazArabicName: "Jiharkah (F4)",
     scaleNotes: ["D4", "Ed4", "F4", "Gb4", "A4", "Bb4", "C5", "Db5"],
-    commas53Sequence: [6, 7, 5, 12, 5, 9, 4],
+    //commas53Sequence: [6, 7, 5, 12, 5, 9, 4],
     jinsAsl: {
       name: "Jins Saba",
       tonicArabicName: "Dukah (D4)",
@@ -483,7 +483,7 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicArabicName: "qarar Ajam (Bb3)",
     ghammazArabicName: "Jiharkah (F4)",
     scaleNotes: ["Bb3", "C4", "D4", "Eb4", "F4", "G4", "A4", "Bb4"],
-    commas53Sequence: [9, 8, 5, 9, 9, 8, 5],
+    //commas53Sequence: [9, 8, 5, 9, 9, 8, 5],
     jinsAsl: {
       name: "Jins Ajam",
       tonicArabicName: "qarar Ajam (Bb3)",

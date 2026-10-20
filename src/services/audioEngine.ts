@@ -1,4 +1,4 @@
-import { TuningSystem } from '../types/maqam';
+import { TuningSystem } from "../types/maqam";
 
 // Base frequency reference: A4 = 440.0 Hz
 const A4_FREQ = 440.0;
@@ -8,7 +8,7 @@ export class AudioEngine {
   private masterGain: GainNode | null = null;
   private bodyFilterAir: BiquadFilterNode | null = null;
   private bodyFilterWood: BiquadFilterNode | null = null;
-  
+
   // Drone subsystem
   private droneOsc: OscillatorNode | null = null;
   private droneGain: GainNode | null = null;
@@ -20,7 +20,10 @@ export class AudioEngine {
 
   public init() {
     if (!this.ctx) {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext })
+          .webkitAudioContext;
       this.ctx = new AudioCtx();
 
       this.masterGain = this.ctx.createGain();
@@ -29,21 +32,21 @@ export class AudioEngine {
       // Acoustic violin body formants
       // 1. Air Cavity Resonance (f0 resonance around 280 Hz)
       this.bodyFilterAir = this.ctx.createBiquadFilter();
-      this.bodyFilterAir.type = 'peaking';
+      this.bodyFilterAir.type = "peaking";
       this.bodyFilterAir.frequency.setValueAtTime(285, this.ctx.currentTime);
       this.bodyFilterAir.Q.setValueAtTime(2.2, this.ctx.currentTime);
       this.bodyFilterAir.gain.setValueAtTime(3.5, this.ctx.currentTime);
 
       // 2. Wood Plate Main Resonance (around 460 - 500 Hz)
       this.bodyFilterWood = this.ctx.createBiquadFilter();
-      this.bodyFilterWood.type = 'peaking';
+      this.bodyFilterWood.type = "peaking";
       this.bodyFilterWood.frequency.setValueAtTime(475, this.ctx.currentTime);
       this.bodyFilterWood.Q.setValueAtTime(1.8, this.ctx.currentTime);
       this.bodyFilterWood.gain.setValueAtTime(4.0, this.ctx.currentTime);
 
       // High shelf / lowpass to recreate warm bowed violin dampening
       const highDamp = this.ctx.createBiquadFilter();
-      highDamp.type = 'lowpass';
+      highDamp.type = "lowpass";
       highDamp.frequency.setValueAtTime(4200, this.ctx.currentTime);
       highDamp.Q.setValueAtTime(0.7, this.ctx.currentTime);
 
@@ -53,38 +56,25 @@ export class AudioEngine {
       highDamp.connect(this.ctx.destination);
     }
 
-    if (this.ctx.state === 'suspended') {
+    if (this.ctx.state === "suspended") {
       this.ctx.resume();
     }
   }
 
-  /**
-   * Calculates the exact frequency in Hertz based on tuning system and microtone offset.
-   * - 24-EDO: divides octave into 24 quarter tones of 50 cents each.
-   * - 53-EDO: Ottoman-Arab comma tuning (53 equal divisions of ~22.6415 cents/comma).
-   * - 12-TET: standard Western equal temperament.
-   */
   public calculateFrequency(
-    baseMidi: number, 
-    quarterToneOffset = 0, 
-    tuning: TuningSystem = '24-EDO', 
-    commaOffset = 0
+    baseMidi: number,
+    quarterToneOffset = 0,
+    tuning: TuningSystem = "24-EDO",
   ): number {
     // baseMidi is standard 12-TET MIDI number (e.g. C4 = 60, A4 = 69)
-    if (tuning === '24-EDO') {
+    if (tuning === "24-EDO") {
       // Each quarter-tone is 0.5 semitone
-      const totalSemitonesFromA4 = (baseMidi - 69) + (quarterToneOffset * 0.5);
+      const totalSemitonesFromA4 = baseMidi - 69 + quarterToneOffset * 0.5;
       return A4_FREQ * Math.pow(2, totalSemitonesFromA4 / 12);
-    } else if (tuning === '53-EDO') {
-      // Offtonic 53-EDO comma system
-      // Standard A4 is matched to index 0, each comma is 2^(1/53)
-      const semitoneDifference = baseMidi - 69;
-      // Convert standard 12-TET distance to approximate commas + precise comma delta
-      const commasFromA4 = Math.round(semitoneDifference * (53 / 12)) + commaOffset;
-      return A4_FREQ * Math.pow(2, commasFromA4 / 53);
     } else {
       // 12-TET: rounds quarter tone offsets to nearest semitone
-      const totalSemitones = (baseMidi - 69) + Math.round(quarterToneOffset * 0.5);
+      const totalSemitones =
+        baseMidi - 69 + Math.round(quarterToneOffset * 0.5);
       return A4_FREQ * Math.pow(2, totalSemitones / 12);
     }
   }
@@ -94,10 +84,10 @@ export class AudioEngine {
    * subtle bow friction noise, and vibrato LFO.
    */
   public playNote(
-    freq: number, 
-    durationSec = 1.2, 
-    _voiceId = Date.now(), 
-    enableVibrato = true
+    freq: number,
+    durationSec = 1.2,
+    _voiceId = Date.now(),
+    enableVibrato = true,
   ): () => void {
     this.init();
     if (!this.ctx || !this.masterGain) return () => {};
@@ -106,11 +96,11 @@ export class AudioEngine {
 
     // Dual oscillator for rich harmonic violin string texture (sawtooth + slightly detuned triangle)
     const oscSaw = this.ctx.createOscillator();
-    oscSaw.type = 'sawtooth';
+    oscSaw.type = "sawtooth";
     oscSaw.frequency.setValueAtTime(freq, now);
 
     const oscSub = this.ctx.createOscillator();
-    oscSub.type = 'triangle';
+    oscSub.type = "triangle";
     oscSub.frequency.setValueAtTime(freq * 2, now); // 2nd harmonic richness
 
     // Vibrato LFO
@@ -123,7 +113,10 @@ export class AudioEngine {
       lfoGain = this.ctx.createGain();
       // Delayed vibrato onset typical of Arabic violin ornaments
       lfoGain.gain.setValueAtTime(0, now);
-      lfoGain.gain.linearRampToValueAtTime(freq * this.vibratoDepth, now + 0.35);
+      lfoGain.gain.linearRampToValueAtTime(
+        freq * this.vibratoDepth,
+        now + 0.35,
+      );
 
       lfo.connect(lfoGain);
       lfoGain.connect(oscSaw.frequency);
@@ -134,7 +127,7 @@ export class AudioEngine {
     // Voice gain envelope with bow attack
     const voiceGain = this.ctx.createGain();
     voiceGain.gain.setValueAtTime(0.0001, now);
-    
+
     // Bowing attack: quick swell to emulate bow hair gripping the string
     const attackTime = 0.08;
     const decayTime = Math.max(attackTime + 0.1, durationSec - 0.25);
@@ -152,7 +145,7 @@ export class AudioEngine {
       noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
 
       const noiseFilter = this.ctx.createBiquadFilter();
-      noiseFilter.type = 'bandpass';
+      noiseFilter.type = "bandpass";
       noiseFilter.frequency.setValueAtTime(2200, now);
       noiseFilter.Q.setValueAtTime(3.0, now);
 
@@ -179,7 +172,10 @@ export class AudioEngine {
       const stopTime = this.ctx.currentTime;
       try {
         voiceGain.gain.cancelScheduledValues(stopTime);
-        voiceGain.gain.setValueAtTime(Math.max(0.0001, voiceGain.gain.value), stopTime);
+        voiceGain.gain.setValueAtTime(
+          Math.max(0.0001, voiceGain.gain.value),
+          stopTime,
+        );
         voiceGain.gain.exponentialRampToValueAtTime(0.0001, stopTime + 0.1);
         oscSaw.stop(stopTime + 0.12);
         oscSub.stop(stopTime + 0.12);
@@ -203,13 +199,16 @@ export class AudioEngine {
 
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
-    osc.type = 'triangle';
+    osc.type = "triangle";
     osc.frequency.setValueAtTime(freq, now);
     // Subtle initial tension release typical of finger plucking
-    osc.frequency.exponentialRampToValueAtTime(Math.max(20, freq * 0.996), now + 0.08);
+    osc.frequency.exponentialRampToValueAtTime(
+      Math.max(20, freq * 0.996),
+      now + 0.08,
+    );
 
     const osc2 = this.ctx.createOscillator();
-    osc2.type = 'sawtooth';
+    osc2.type = "sawtooth";
     osc2.frequency.setValueAtTime(freq, now);
 
     const osc2Gain = this.ctx.createGain();
@@ -235,7 +234,10 @@ export class AudioEngine {
       const stopTime = this.ctx.currentTime;
       try {
         voiceGain.gain.cancelScheduledValues(stopTime);
-        voiceGain.gain.setValueAtTime(Math.max(0.0001, voiceGain.gain.value), stopTime);
+        voiceGain.gain.setValueAtTime(
+          Math.max(0.0001, voiceGain.gain.value),
+          stopTime,
+        );
         voiceGain.gain.exponentialRampToValueAtTime(0.0001, stopTime + 0.05);
         osc.stop(stopTime + 0.06);
         osc2.stop(stopTime + 0.06);
@@ -260,7 +262,7 @@ export class AudioEngine {
       }
       const now = this.ctx.currentTime;
       this.droneOsc = this.ctx.createOscillator();
-      this.droneOsc.type = 'sawtooth';
+      this.droneOsc.type = "sawtooth";
       this.droneOsc.frequency.setValueAtTime(freq, now);
 
       this.droneGain = this.ctx.createGain();
@@ -269,7 +271,7 @@ export class AudioEngine {
 
       // Low pass to keep drone warm and non-distracting
       const droneFilter = this.ctx.createBiquadFilter();
-      droneFilter.type = 'lowpass';
+      droneFilter.type = "lowpass";
       droneFilter.frequency.setValueAtTime(800, now);
 
       this.droneOsc.connect(droneFilter);
@@ -314,7 +316,10 @@ export class AudioEngine {
 
   public setMasterVolume(vol: number) {
     if (this.masterGain && this.ctx) {
-      this.masterGain.gain.setValueAtTime(Math.max(0, Math.min(1, vol)), this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(
+        Math.max(0, Math.min(1, vol)),
+        this.ctx.currentTime,
+      );
     }
   }
 

@@ -69,7 +69,6 @@ export const MaqamSelector: React.FC<MaqamSelectorProps> = ({
             className="w-full bg-canvas border border-line-strong rounded-xl px-3.5 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-amber-500/50 cursor-pointer"
           >
             <option value="24-EDO">24-EDO (Modern 1/4 Tone - Cairo 1932)</option>
-            <option value="53-EDO">53-EDO (Classical Offtonic / Comma System)</option>
             <option value="12-TET">12-TET (Standard Western Temperament)</option>
           </select>
         </div>

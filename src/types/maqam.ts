@@ -1,11 +1,12 @@
-export type TuningSystem = '24-EDO' | '53-EDO' | '12-TET';
+export type TuningSystem =  '12-TET' | '24-EDO';
 export type ViolinTuningPreset = 'standard' | 'arabic'; // standard: G3 D4 A4 E5, arabic: G3 D4 G4 D5
+
 
 export interface MicrotoneNote {
   name: string;              // Western representation e.g. "Ed", "F#", "Bd"
   arabicName: string;        // Historical Arabic name e.g. "Sikah", "Rast", "Dukah"
   quarterIndex: number;      // 0 to 23 relative to C (each step = 50 cents)
-  comma53Index: number;      // 0 to 52 relative to C (each step = 1200/53 cents)
+  //comma53Index: number;      // 0 to 52 relative to C (each step = 1200/53 cents)
   accidental: 'natural' | 'flat' | 'half-flat' | 'sharp' | 'half-sharp';
   cents: number;             // Offset in cents from C within the octave
 }
@@ -27,11 +28,15 @@ export interface MaqamScale {
   ghammazArabicName: string; // Dominant/modulation degree e.g. "Nawa"
   scaleNotes: string[];      // Array of note names ascending e.g. ["C4", "D4", "Ed4", "F4", "G4", "A4", "Bd4", "C5"]
   descendingNotes?: string[];// Specific descending pathway if different (e.g. Nahwand, Hijaz, Rast)
-  commas53Sequence?: number[];// Intervals in commas (53-EDO) e.g. [9, 7, 6, 9, 9, 7, 6]
+
+  sayrNotes: string;         // Melodic movement guidance
   jinsAsl: Jins;             // Root jins
   jinsFar: Jins;             // Secondary jins
-  sayrNotes: string;         // Melodic movement guidance
+  JinsTop?:Jins[];
   theoreticalNote?: string;
+   intervals?:number[]; // intervals in quarters 
+ 
+  transportionMaqamat?:MaqamScale[]; //  ex. for hijazkar if the root tonic is G3 then the Maqam named `Shadd'Arban`, 'Suzidil' for  Hijazkar on low A 'Shahnaz' for Hijazkar on D4
 }
 
 // 24 Quarter-Tone pitch map with Arabic note names across the central registers

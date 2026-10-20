@@ -45,7 +45,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
 
           <div className="bg-surface/60 border border-line rounded-2xl p-3.5 space-y-2 text-xs">
             <div className="flex items-center gap-2 text-ink font-semibold">
-              <span className="text-amber-400">✦</span> 24-EDO Quarter-Tones &amp; 53-EDO Ottoman Commas
+              <span className="text-amber-400">✦</span> 24-EDO Quarter-Tones
             </div>
             <div className="flex items-center gap-2 text-ink font-semibold">
               <span className="text-cyan-400">✦</span> Authentic G3–D4–G4–D5 Arabic Peg Scordatura

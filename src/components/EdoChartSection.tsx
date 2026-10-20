@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MaqamScale, TuningSystem } from '../types/maqam';
 import { Maqam24EdoChart } from './Maqam24EdoChart';
-import { Maqam53EdoChart } from './Maqam53EdoChart';
+// import { Maqam53EdoChart } from './Maqam53EdoChart';
 
 interface EdoChartSectionProps {
   currentMaqam: MaqamScale;
@@ -10,21 +10,23 @@ interface EdoChartSectionProps {
   onNoteTrigger: (noteKey: string, freq: number) => void;
 }
 
-type EdoTab = '24' | '53';
+type EdoTab = '24' | '12';
 
-/** Switches between the parallel 24-EDO and 53-EDO charts; follows the active tuning system. */
+/** Switches between the parallel 24-EDO chart; follows the active tuning system. */
 export const EdoChartSection: React.FC<EdoChartSectionProps> = (props) => {
-  const [tab, setTab] = useState<EdoTab>(props.tuningSystem === '53-EDO' ? '53' : '24');
+ 
+  const [tab,setTab]=useState<EdoTab>(props.tuningSystem==='12-TET' ? '12' : '24')
 
   // When the player changes tuning system, bring the matching analysis forward.
   useEffect(() => {
-    if (props.tuningSystem === '53-EDO') setTab('53');
+    if (props.tuningSystem === '12-TET') setTab('12');
     else if (props.tuningSystem === '24-EDO') setTab('24');
   }, [props.tuningSystem]);
 
   const tabs: { id: EdoTab; label: string; sub: string }[] = [
     { id: '24', label: '24-EDO', sub: 'Quarter-tones · أرباع' },
-    { id: '53', label: '53-EDO', sub: 'Commas · كومات' },
+  {id: '12',label: '12-TET',sub: 'Half-tones · انصاف'}
+ 
   ];
 
   return (
@@ -47,7 +49,7 @@ export const EdoChartSection: React.FC<EdoChartSectionProps> = (props) => {
         ))}
       </div>
 
-      {tab === '24' ? <Maqam24EdoChart {...props} /> : <Maqam53EdoChart {...props} />}
+       <Maqam24EdoChart {...props} />
     </div>
   );
 };
