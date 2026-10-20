@@ -18,6 +18,13 @@ export interface Jins {
   sourceUrl?: string;
 }
 
+export interface MaqamTranspositionAlias {
+  name: string;
+  arabicName?: string;
+  tonicNote: string;
+  note: string;
+}
+
 export interface MaqamScale {
   id: string;
   name: string;
@@ -36,7 +43,7 @@ export interface MaqamScale {
   theoreticalNote?: string;
    intervals?:number[]; // intervals in quarters 
  
-  transportionMaqamat?:MaqamScale[]; //  ex. for hijazkar if the root tonic is G3 then the Maqam named `Shadd'Arban`, 'Suzidil' for  Hijazkar on low A 'Shahnaz' for Hijazkar on D4
+  transpositionAliases?: MaqamTranspositionAlias[];
   sourceUrl?: string;
 }
 

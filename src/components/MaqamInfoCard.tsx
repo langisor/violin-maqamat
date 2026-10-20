@@ -26,6 +26,22 @@ export const MaqamInfoCard: React.FC<MaqamInfoCardProps> = ({ maqam }) => {
         </div>
       </div>
 
+      {maqam.transpositionAliases && maqam.transpositionAliases.length > 0 && (
+        <div className="bg-amber-950/20 border border-amber-900/40 rounded-xl p-4">
+          <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+            Historical Transposition Names
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {maqam.transpositionAliases.map((alias) => (
+              <span key={alias.name} className="rounded-lg bg-canvas/80 border border-line px-2.5 py-1.5 text-xs text-ink">
+                <strong className="text-amber-300">{alias.name}</strong>
+                <span className="text-ink-muted"> · {alias.tonicNote} · {alias.note}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Scale Notes & Degrees */}
       <div>
         <h4 className="text-xs font-semibold uppercase tracking-wider text-ink-muted mb-2.5">

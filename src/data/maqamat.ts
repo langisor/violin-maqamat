@@ -12,6 +12,25 @@ export const MAQAM_FAMILIES = [
   "Independent",
 ] as const;
 
+export const MAQAM_FAMILY_SOURCES = {
+  Ajam: "https://www.maqamworld.com/en/maqam/f_ajam.php",
+  Bayati: "https://www.maqamworld.com/en/maqam/f_bayati.php",
+  Hijaz: "https://www.maqamworld.com/en/maqam/f_hijaz.php",
+  Kurd: "https://www.maqamworld.com/en/maqam/f_kurd.php",
+  Nahwand: "https://www.maqamworld.com/en/maqam/f_nahawand.php",
+  Nikriz: "https://www.maqamworld.com/en/maqam/f_nikriz.php",
+  Rast: "https://www.maqamworld.com/en/maqam/f_rast.php",
+  Sikah: "https://www.maqamworld.com/en/maqam/f_sikah.php",
+} as const;
+
+export const INDEPENDENT_MAQAM_SOURCES = {
+  Jiharkah: "https://www.maqamworld.com/en/maqam/jiharkah.php",
+  Lami: "https://www.maqamworld.com/en/maqam/lami.php",
+  Saba: "https://www.maqamworld.com/en/maqam/saba.php",
+  "Saba Zamzam": "https://www.maqamworld.com/en/maqam/saba_zamzam.php",
+  "Sikah Baladi": "https://www.maqamworld.com/en/maqam/sikah_baladi.php",
+} as const;
+
 /**
  * Names and classification from MaqamWorld's Maqam Index. Some entries are
  * intentionally catalogued here before they receive a playable local scale,
@@ -392,7 +411,8 @@ export const MAQAM_DATASET: MaqamScale[] = [
     tonicNote: "C4",
     tonicArabicName: "Rast (C4)",
     ghammazArabicName: "Nawa (G4)",
-    scaleNotes: ["C4", "Db4", "E4", "F4", "G4", "Ab4", "B4", "C5"],
+    scaleNotes: ["C4", "Db4", "E4", "F4", "G4", "Ab4", "B4", "C5", "Db5", "E5"],
+    descendingNotes: ["E5", "Db5", "C5", "B4", "Ab4", "G4", "F4", "E4", "Db4", "C4"],
     jinsAsl: {
       name: "Jins Hijaz",
       tonicArabicName: "Rast (C4)",
@@ -400,14 +420,29 @@ export const MAQAM_DATASET: MaqamScale[] = [
       description: "Hijaz on C4.",
     },
     jinsFar: {
-      name: "Jins Hijaz",
-      tonicArabicName: "Nawa (G4)",
-      intervalsInCents: [113, 272, 113],
-      description: "Symmetrical upper Hijaz on G4.",
+      name: "Jins Nikriz",
+      tonicArabicName: "Jiharkah (F4)",
+      intervalsInCents: [204, 113, 272, 113],
+      description: "Jins Nikriz centered on the fourth degree.",
+      sourceUrl: "https://www.maqamworld.com/en/jins/nikriz.php",
     },
+    JinsTop: [
+      {
+        name: "Jins Hijazkar",
+        tonicArabicName: "Rast (C5)",
+        intervalsInCents: [],
+        description: "Jins Hijazkar on the octave, as described by MaqamWorld.",
+        sourceUrl: "https://www.maqamworld.com/en/jins/hijazkar.php",
+      },
+    ],
     
     sayrNotes:
-      "Double Hijaz trichord/tetrachord. Descending sayr starting from C5 down to C4.",
+      "The source course begins at E5 and descends through D♭5, C5, B4, A♭4, G4, F4, E4, and D♭4 to the tonic C4.",
+    transpositionAliases: [
+      { name: "Shadd ‘Araban", tonicNote: "G3", note: "Hijazkar on low G" },
+      { name: "Suzidil", tonicNote: "A3", note: "Hijazkar on low A" },
+      { name: "Shahnaz", tonicNote: "D4", note: "Hijazkar on D" },
+    ],
     sourceUrl: "https://www.maqamworld.com/en/maqam/hijazkar.php",
     
   },
