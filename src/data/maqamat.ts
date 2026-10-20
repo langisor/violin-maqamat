@@ -386,8 +386,10 @@ export const MAQAM_DATASET: MaqamScale[] = [
       intervalsInCents: [113, 272, 113],
       description: "Symmetrical upper Hijaz on G4.",
     },
+    
     sayrNotes:
       "Double Hijaz trichord/tetrachord. Descending sayr starting from C5 down to C4.",
+    
   },
 
   // --- 5. NAHWAND FAMILY ---

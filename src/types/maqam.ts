@@ -22,13 +22,13 @@ export interface MaqamScale {
   id: string;
   name: string;
   arabicName: string;
-  family: 'Rast' | 'Bayati' | 'Sikah' | 'Hijaz' | 'Nahwand' | 'Kurd' | 'Saba' | 'Ajam';
+  family: 'Rast' | 'Bayati' | 'Sikah' | 'Hijaz' | 'Nahwand' | 'Kurd' | 'Saba' | 'Ajam' | 'Independant';
   tonicNote: string;         // e.g. "C4", "D4", "Ed4", "Bb3"
   tonicArabicName: string;   // e.g. "Rast", "Dukah", "Sikah"
   ghammazArabicName: string; // Dominant/modulation degree e.g. "Nawa"
   scaleNotes: string[];      // Array of note names ascending e.g. ["C4", "D4", "Ed4", "F4", "G4", "A4", "Bd4", "C5"]
   descendingNotes?: string[];// Specific descending pathway if different (e.g. Nahwand, Hijaz, Rast)
-
+  
   sayrNotes: string;         // Melodic movement guidance
   jinsAsl: Jins;             // Root jins
   jinsFar: Jins;             // Secondary jins
