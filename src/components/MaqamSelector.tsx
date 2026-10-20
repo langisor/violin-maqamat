@@ -124,7 +124,7 @@ export const MaqamSelector: React.FC<MaqamSelectorProps> = ({
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm transition-all shadow-lg active:scale-95 cursor-pointer ${
               isPlayingScale
                 ? 'bg-amber-400 text-on-accent font-bold ring-2 ring-white shadow-[0_0_15px_rgba(251,191,36,0.6)] animate-pulse'
-                : 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-on-accent font-bold shadow-amber-500/20'
+                : 'bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-on-accent font-bold shadow-amber-500/20'
             }`}
           >
             <span>{isPlayingScale ? '■ Stop Sayr (إيقاف)' : '▶ Play Scale (عزف السلم)'}</span>

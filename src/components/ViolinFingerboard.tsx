@@ -29,7 +29,6 @@ export interface BoardNote {
   isQuarterTone: boolean;
   baseMidi: number;
   quarterOffset: number;
-  commaOffset: number;
   x: number;
   y: number;
   fingerTape?: 'open' | '1st' | '2nd-neutral' | '2nd' | '3rd' | '4th' | 'other';
@@ -178,7 +177,6 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
         isQuarterTone: false,
         baseMidi: midi,
         quarterOffset: 0,
-        commaOffset: Math.round(semitone * (53 / 12)),
         x,
         y,
         fingerTape,
@@ -233,7 +231,6 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
             isQuarterTone: true,
             baseMidi: midi,
             quarterOffset: qOffset,
-            commaOffset: Math.round((semitone + 0.5) * (53 / 12)),
             x: qX,
             y: qY,
             fingerTape: '2nd-neutral',
@@ -249,7 +246,6 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
       note.baseMidi,
       note.quarterOffset,
       tuningSystem,
-      note.commaOffset
     );
 
     if (playMode === 'bow') {
@@ -268,7 +264,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
     if (openNote) {
       handlePlay(openNote);
     } else {
-      const freq = audioEngine.calculateFrequency(str.openMidi, 0, tuningSystem, 0);
+      const freq = audioEngine.calculateFrequency(str.openMidi, 0, tuningSystem);
       audioEngine.playNote(freq, 1.2);
       onNoteTrigger(str.openNote, freq);
     }
@@ -413,7 +409,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
 
       {/* Tapered Fingerboard SVG Stage */}
       <div className="w-full overflow-x-auto pb-2 scrollbar-thin select-none">
-        <div className="min-w-[980px] relative">
+        <div className="min-w-245 relative">
           <svg
             viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`}
             className="w-full h-auto drop-shadow-2xl"
@@ -1097,7 +1093,7 @@ export const ViolinFingerboard: React.FC<FingerboardProps> = ({
                 {hoveredNote.arabicName || ''}
               </span>
               <span className="text-ink-faint font-mono">
-                ({audioEngine.calculateFrequency(hoveredNote.baseMidi, hoveredNote.quarterOffset, tuningSystem, hoveredNote.commaOffset).toFixed(1)} Hz)
+                ({audioEngine.calculateFrequency(hoveredNote.baseMidi, hoveredNote.quarterOffset, tuningSystem).toFixed(1)} Hz)
               </span>
             </div>
           ) : (

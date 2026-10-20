@@ -37,7 +37,7 @@ export const MaqamInfoCard: React.FC<MaqamInfoCardProps> = ({ maqam }) => {
             return (
               <div
                 key={idx}
-                className="flex flex-col items-center justify-center bg-canvas/80 border border-line rounded-xl px-2.5 py-2.5 min-w-[56px] text-center"
+                className="flex flex-col items-center justify-center bg-canvas/80 border border-line rounded-xl px-2.5 py-2.5 min-w-14 text-center"
               >
                 <span className="text-[10px] text-ink-faint font-mono">Degree {idx + 1}</span>
                 <span className="text-base font-bold text-amber-300 my-0.5">{note}</span>

@@ -26,7 +26,7 @@ export const ExitModal: React.FC<ExitModalProps> = ({
         {/* Header */}
         <div className="p-5 sm:p-6 border-b border-line bg-red-950/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-rose-400 flex items-center justify-center text-on-accent font-bold shadow-lg shadow-red-500/20">
+            <div className="w-10 h-10 rounded-xl bg-linear-to-tr from-red-600 to-rose-400 flex items-center justify-center text-on-accent font-bold shadow-lg shadow-red-500/20">
               <AlertTriangle className="w-5 h-5 text-on-accent" />
             </div>
             <div>

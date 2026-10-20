@@ -20,7 +20,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
       <div className="w-full max-w-md bg-panel-pop border border-amber-900/40 rounded-3xl shadow-2xl overflow-hidden flex flex-col text-ink anim-pop">
         {/* Header */}
         <div className="p-5 sm:p-6 border-b border-line bg-canvas/70 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-on-accent font-bold shadow-lg shadow-amber-500/20 shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-linear-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-on-accent font-bold shadow-lg shadow-amber-500/20 shrink-0">
             <Info className="w-5 h-5 text-on-accent" />
           </div>
           <div>
@@ -82,7 +82,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
           <button
             type="button"
             onClick={onClose}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-on-accent font-bold text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-on-accent font-bold text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
           >
             <Check className="w-4 h-4" />
             <span>OK</span>

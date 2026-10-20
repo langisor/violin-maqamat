@@ -134,7 +134,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
             <button
               type="button"
               onClick={() => handleSelectAction(onOpenExit)}
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left hover:bg-red-950/40 hover:text-red-200 border border-transparent hover:border-red-500/30 text-ink hover:text-red-300 transition-colors cursor-pointer group"
+              className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left hover:bg-red-950/40 hover:text-red-200 border border-transparent hover:border-red-500/30 text-ink transition-colors cursor-pointer group"
             >
               <div className="flex items-center gap-2.5">
                 <div className="w-7 h-7 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center group-hover:scale-110 transition-transform">

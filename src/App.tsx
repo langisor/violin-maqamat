@@ -237,7 +237,7 @@ export const App: React.FC = () => {
             <button
               type="button"
               onClick={handleRestartApp}
-              className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-on-accent font-bold text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-3 px-6 rounded-xl bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-on-accent font-bold text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
             >
               <RotateCcw className="w-4 h-4" />
               <span>Relaunch Workstation (إعادة التشغيل)</span>
@@ -254,7 +254,7 @@ export const App: React.FC = () => {
       <header className="border-b border-line bg-canvas/85 sticky top-0 z-40 px-4 sm:px-6 py-3.5 backdrop-blur-md transition-colors duration-200">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20 text-stone-950 font-bold text-xl select-none">
+            <div className="w-10 h-10 rounded-xl bg-linear-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20 text-stone-950 font-bold text-xl select-none">
               🎻
             </div>
             <div>

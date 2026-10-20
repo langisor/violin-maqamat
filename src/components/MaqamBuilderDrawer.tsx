@@ -494,7 +494,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
             </div>
 
             {/* Prominent Formula Bar as requested: e.g. R(C3) - 4 - 3(half-flat) - 4 - .... */}
-            <div className="p-3.5 bg-gradient-to-r from-amber-950/40 via-surface/90 to-amber-950/30 border border-amber-500/50 rounded-xl flex items-center justify-between gap-3 overflow-x-auto scrollbar-thin shadow-inner">
+            <div className="p-3.5 bg-linear-to-r from-amber-950/40 via-surface/90 to-amber-950/30 border border-amber-500/50 rounded-xl flex items-center justify-between gap-3 overflow-x-auto scrollbar-thin shadow-inner">
               <div className="font-mono text-sm sm:text-base font-bold text-amber-300 tracking-wider select-all whitespace-nowrap flex items-center gap-1.5">
                 <span className="text-amber-400 font-extrabold bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30">
                   R({builtScaleResult.builtMaqam.tonicNote})
@@ -580,7 +580,7 @@ export const MaqamBuilderDrawer: React.FC<MaqamBuilderDrawerProps> = ({
           <button
             type="button"
             onClick={handleApplyToApp}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-on-accent shadow-lg shadow-amber-500/20 transition-all cursor-pointer active:scale-95"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-on-accent shadow-lg shadow-amber-500/20 transition-all cursor-pointer active:scale-95"
           >
             <Check className="w-4 h-4" />
             <span>Apply to Violin (تطبيق على الكمان)</span>
